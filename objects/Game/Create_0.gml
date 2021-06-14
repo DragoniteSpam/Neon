@@ -66,16 +66,16 @@ elements = [
 
 function GenerateElement(rank) {
     var max_weight = 0;
-    for (var i = 0; i < min(rank, array_length(self.elements)); i++) {
+    for (var i = 0; i < min(rank + 1, array_length(self.elements)); i++) {
         for (var j = 0; j < array_length(self.elements[i]); j++) {
-            max_weight += self.elements[i][j];
+            max_weight += self.elements[i][j].weight;
         }
     }
     var rng = random(max_weight - 1);
     var allotted_weight = 0;
-    for (var i = 0; i < min(rank, array_length(self.elements)); i++) {
+    for (var i = 0; i < min(rank + 1, array_length(self.elements)); i++) {
         for (var j = 0; j < array_length(self.elements[i]); j++) {
-            allotted_weight += self.elements[i][j];
+            allotted_weight += self.elements[i][j].weight;
             if (allotted_weight >= rng) {
                 return self.elements[i][j].element;
             }
