@@ -87,10 +87,14 @@ function GenerateElement(rank) {
 
 #macro BOARD_SIZE 5
 
+board_start_x = 32;
+board_start_y = 32;
+board_spacing = 130;
+
 board = array_create(BOARD_SIZE);
 for (var i = 0; i < BOARD_SIZE; i++) {
     board[i] = array_create(BOARD_SIZE);
     for (var j = 0; j < BOARD_SIZE; j++) {
-        board[i][j] = GenerateElement(0);
+        board[i][j] = new ElementCard(board_start_x + i * board_spacing, board_start_y + j * board_spacing, GenerateElement(0));
     }
 }

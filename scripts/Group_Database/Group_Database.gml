@@ -47,11 +47,11 @@ function ElementCard(x, y, element) constructor {
         self.element.draw(self.x, self.y, self.mouseover);
     }
     
-    function mouse(mx, my) {
+    function step(mx, my) {
         var x1 = self.x;
         var y1 = self.y;
-        var x2 = sprite_get_width(self.element.sprite);
-        var y2 = sprite_get_height(self.element.sprite);
+        var x2 = x1 + sprite_get_width(self.element.sprite);
+        var y2 = y1 + sprite_get_height(self.element.sprite);
         if (point_in_rectangle(mx, my, x1, y1, x2, y2)) {
             self.mouseover = true;
         } else {
