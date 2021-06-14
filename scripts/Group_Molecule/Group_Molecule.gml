@@ -74,6 +74,7 @@ function Molecule() constructor {
     };
     
     function Add(element) {
+        array_push(self.log, element);
         if (element.electro == undefined) {
             self.score *= element.number;
             return;
@@ -104,4 +105,5 @@ function Molecule() constructor {
     
     self.root = undefined;
     self.score = 0;
+    self.log = [];
 }
