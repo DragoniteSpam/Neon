@@ -4,23 +4,40 @@ function Molecule() constructor {
         self.element = element;
         self.id = atom_id++;
         self.bonds = [];
+        self.valence = element.valence;
         
         function Add(node, seen) {
             if (seen[$ self.id]) return;
             seen[$ self.id] = true;
             
-            if (/* can be added to this atom */false) {
-                
+            if (self.valence > 0 & self.valence < self.element.shell_size) {
+                if (node.element.electro > self.element.electro) {
+                    var will_give = min(node.element.shell_size - node.element.valence, self.valence);
+                    node.valence += will_give;
+                    self.valence -= will_give;
+                } else {
+                    var will_accept = min(self.element.shell_size - self.element.valence, node.valence);
+                    node.valence -= will_accept;
+                    self.valence += will_accept;
+                }
+                self.Bond(node);
+                return true;
             }
             
             for (var i = 0; i < array_length(self.bonds); i++) {
-                self.bonds[i].Add(node, seen);
+                if (self.bonds[i].Add(node, seen)) return true;
             }
+            
+            return false;
         }
         
         function Bond(node) {
             array_push(self.bonds, node);
             array_push(node.bonds, self);
+        }
+        
+        function Complete() {
+            
         }
     };
     
