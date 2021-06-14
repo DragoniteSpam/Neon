@@ -69,14 +69,7 @@ function Molecule() constructor {
             self.root = node;
             return;
         }
-        if (!self.IsValid(element)) {
-            //return;
-        }
         self.root.Add(node, { });
-    }
-    
-    function IsValid(element) {
-        return false;
     }
     
     function IsComplete() {
