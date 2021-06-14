@@ -1,3 +1,4 @@
+#region chemistry setup
 #macro c_hydrogen       0xffcc00
 #macro c_alkali         0x00ccff
 #macro c_earth          0x0099cc
@@ -63,7 +64,9 @@ elements = [
         { element: argon,           weight: 0.1 },
     ],
 ];
+#endregion
 
+#region function setup
 function GenerateElement(rank) {
     var max_weight = 0;
     for (var i = 0; i < min(rank + 1, array_length(self.elements)); i++) {
@@ -84,7 +87,9 @@ function GenerateElement(rank) {
     
     return self.hydrogen;
 };
+#endregion
 
+#region game setup
 #macro BOARD_SIZE 5
 
 board_start_x = 32;
@@ -98,3 +103,6 @@ for (var i = 0; i < BOARD_SIZE; i++) {
         board[i][j] = new ElementCard(board_start_x + i * board_spacing, board_start_y + j * board_spacing, GenerateElement(0));
     }
 }
+
+molecule = new Molecule();
+#endregion
