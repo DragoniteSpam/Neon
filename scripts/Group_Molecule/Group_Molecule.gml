@@ -10,6 +10,13 @@ function Molecule() constructor {
             if (seen[$ self.id]) return;
             seen[$ self.id] = true;
             
+            // i don't know if this is an actual rule but i've never seen atoms
+            // that both have an electronegativity lower than Hydrogen bond so
+            // we'll just go with it for now
+            if (self.element.electro < 2.3 && node.element.electro < 2.3) {
+                return false;
+            }
+            
             if (!self.Complete()) {
                 var diff = node.element.electro - self.element.electro;
                 if (abs(diff) < 1.7) {      // covalent
