@@ -10,14 +10,14 @@ function Molecule() constructor {
             if (seen[$ self.id]) return;
             seen[$ self.id] = true;
             
-            if (self.valence > 0 & self.valence < self.element.shell_size) {
+            if (self.valence > 0 && self.valence < self.element.shell_size) {
                 if (node.element.electro > self.element.electro) {
-                    var will_give = min(node.element.shell_size - node.element.valence, self.valence);
+                    var will_give = min(node.element.shell_size - node.element.valence, self.element.shell_size - self.valence);
                     node.valence += will_give;
-                    self.valence -= will_give;
+                    self.valence += will_give;
                 } else {
-                    var will_accept = min(self.element.shell_size - self.element.valence, node.valence);
-                    node.valence -= will_accept;
+                    var will_accept = min(self.element.shell_size - self.element.valence, node.element.shell_size - node.valence);
+                    node.valence += will_accept;
                     self.valence += will_accept;
                 }
                 self.Bond(node);
@@ -51,7 +51,6 @@ function Molecule() constructor {
             return;
         }
         var seen = { };
-        seen[$ self.root.id] = true;
         self.root.Add(node, seen);
     }
     
