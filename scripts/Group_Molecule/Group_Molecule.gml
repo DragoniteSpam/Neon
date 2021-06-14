@@ -1,11 +1,13 @@
 function Molecule() constructor {
     static MoleculeNode = function(element) constructor {
+        static atom_id = 0;
         self.element = element;
+        self.id = atom_id++;
         self.bonds = [];
         
         function Add(node, seen) {
-            if (seen[$ string(ptr(self.root))]) return;
-            seen[$ string(ptr(self))] = true;
+            if (seen[$ self.id]) return;
+            seen[$ self.id] = true;
             
             if (/* can be added to this atom */false) {
                 
@@ -32,7 +34,7 @@ function Molecule() constructor {
             return;
         }
         var seen = { };
-        seen[$ string(ptr(self.root))] = true;
+        seen[$ self.root.id] = true;
         self.root.Add(node, seen);
     }
     
