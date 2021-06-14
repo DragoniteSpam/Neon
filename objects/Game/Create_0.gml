@@ -39,27 +39,48 @@ argon                   = new Element("Argon",      "Ar",   18,     8,      unde
 
 elements = [
     [
-        { element: hydrogen,        weight: 2.5,    rank: 0 },
-        { element: helium,          weight: 0.8,    rank: 0 },
-        { element: lithium,         weight: 0.0,    rank: 0 },
-        { element: beryllium,       weight: 0.0,    rank: 0 },
-        { element: boron,           weight: 0.0,    rank: 0 },
-        { element: carbon,          weight: 0.0,    rank: 0 },      // i really don't want to do organic chemistry, thanks
-        { element: nitrogen,        weight: 1.5,    rank: 0 },
-        { element: oxygen,          weight: 2.5,    rank: 0 },
+        { element: hydrogen,        weight: 2.5 },
+        { element: helium,          weight: 0.8 },
+        { element: lithium,         weight: 0.0 },
+        { element: beryllium,       weight: 0.0 },
+        { element: boron,           weight: 0.0 },
+        { element: carbon,          weight: 0.0 },  // i really don't want to do organic chemistry, thanks
+        { element: nitrogen,        weight: 1.5 },
+        { element: oxygen,          weight: 2.5 },
     ],
     [
-        { element: fluorine,        weight: 1.0,    rank: 1 },
-        { element: neon,            weight: 0.5,    rank: 1 },
-        { element: sodium,          weight: 0.8,    rank: 1 },
+        { element: fluorine,        weight: 1.0 },
+        { element: neon,            weight: 0.5 },
+        { element: sodium,          weight: 0.8 },
     ],
     [
-        { element: magnesium,       weight: 0.7,    rank: 2 },
-        { element: aluminum,        weight: 0.5,    rank: 2 },
-        { element: silicon,         weight: 0.0,    rank: 2 },
-        { element: phosphorus,      weight: 0.5,    rank: 2 },
-        { element: sulfur,          weight: 0.7,    rank: 2 },
-        { element: chlorine,        weight: 0.8,    rank: 2 },
-        { element: argon,           weight: 0.1,    rank: 2 },
+        { element: magnesium,       weight: 0.7 },
+        { element: aluminum,        weight: 0.5 },
+        { element: silicon,         weight: 0.0 },
+        { element: phosphorus,      weight: 0.5 },
+        { element: sulfur,          weight: 0.7 },
+        { element: chlorine,        weight: 0.8 },
+        { element: argon,           weight: 0.1 },
     ],
 ];
+
+function GenerateElement(rank) {
+    var max_weight = 0;
+    for (var i = 0; i < min(rank, array_length(elements)); i++) {
+        for (var j = 0; j < array_length(elements[i]); j++) {
+            max_weight += elements[i][j];
+        }
+    }
+    var rng = random(max_weight - 1);
+    var allotted_weight = 0;
+    for (var i = 0; i < min(rank, array_length(elements)); i++) {
+        for (var j = 0; j < array_length(elements[i]); j++) {
+            allotted_weight += elements[i][j];
+            if (alotted_weight >= rng) {
+                return elements[i][j].element;
+            }
+        }
+    }
+    
+    return hydrogen;
+};
