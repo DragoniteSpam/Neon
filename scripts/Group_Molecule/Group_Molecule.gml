@@ -74,12 +74,12 @@ function Molecule() constructor {
     };
     
     function Add(element) {
-        array_push(self.log, element);
+        var node = new self.MoleculeNode(element);
+        array_push(self.log, node);
         if (element.electro == undefined) {
             self.score *= element.number;
             return;
         }
-        var node = new self.MoleculeNode(element);
         if (!self.root) {
             self.root = node;
             self.score = element.number;
@@ -91,7 +91,10 @@ function Molecule() constructor {
     }
     
     function IsComplete() {
-        return false;
+        for (var i = 0; i < array_length(self.log); i++) {
+            if (!self.log[i].Complete()) return false;
+        }
+        return true;
     }
     
     function RawScore() {
