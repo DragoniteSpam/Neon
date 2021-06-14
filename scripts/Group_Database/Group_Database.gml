@@ -1,9 +1,9 @@
-function Element(name, symbol, number, valence, oxidation, class) constructor {
+function Element(name, symbol, number, valence, electro, class) constructor {
     self.name = name;
     self.symbol = symbol;
     self.number = number;
     self.valence = valence;
-    self.oxidation = oxidation;
+    self.electro = electro;
     self.class = class;
     
     self.sprite = spr_card;
@@ -19,7 +19,7 @@ function Element(name, symbol, number, valence, oxidation, class) constructor {
         draw_set_halign(fa_center);
         draw_text_colour(x + width / 2, y + height / 2, self.symbol, c_black, c_black, c_black, c_black, 1);
         draw_set_halign(fa_right);
-        draw_text_colour(x + width - 20, y + 20, string(self.oxidation), c_black, c_black, c_black, c_black, 1);
+        draw_text_colour(x + width - 20, y + 20, string(self.electro), c_black, c_black, c_black, c_black, 1);
     }
 }
 
