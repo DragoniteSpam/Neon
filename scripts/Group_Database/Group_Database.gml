@@ -13,9 +13,13 @@ function Element(name, symbol, number, valence, oxidation, class) constructor {
         var height = sprite_get_width(self.sprite);
         draw_sprite(self.sprite, 1, x, y);
         draw_sprite_ext(self.sprite, 0, x, y, 1, 1, 0, self.class.color, 1);
-        draw_set_halign(fa_center);
         draw_set_valign(fa_middle);
-        draw_text(x + width / 2, y + height / 2, self.symbol);
+        draw_set_halign(fa_left);
+        draw_text_colour(x + 20, y + 20, self.number, c_black, c_black, c_black, c_black, 1);
+        draw_set_halign(fa_center);
+        draw_text_colour(x + width / 2, y + height / 2, self.symbol, c_black, c_black, c_black, c_black, 1);
+        draw_set_halign(fa_right);
+        draw_text_colour(x + width - 20, y + 20, string(self.oxidation), c_black, c_black, c_black, c_black, 1);
     }
 }
 
