@@ -66,21 +66,31 @@ elements = [
 
 function GenerateElement(rank) {
     var max_weight = 0;
-    for (var i = 0; i < min(rank, array_length(elements)); i++) {
-        for (var j = 0; j < array_length(elements[i]); j++) {
-            max_weight += elements[i][j];
+    for (var i = 0; i < min(rank, array_length(self.elements)); i++) {
+        for (var j = 0; j < array_length(self.elements[i]); j++) {
+            max_weight += self.elements[i][j];
         }
     }
     var rng = random(max_weight - 1);
     var allotted_weight = 0;
-    for (var i = 0; i < min(rank, array_length(elements)); i++) {
-        for (var j = 0; j < array_length(elements[i]); j++) {
-            allotted_weight += elements[i][j];
-            if (alotted_weight >= rng) {
-                return elements[i][j].element;
+    for (var i = 0; i < min(rank, array_length(self.elements)); i++) {
+        for (var j = 0; j < array_length(self.elements[i]); j++) {
+            allotted_weight += self.elements[i][j];
+            if (allotted_weight >= rng) {
+                return self.elements[i][j].element;
             }
         }
     }
     
-    return hydrogen;
+    return self.hydrogen;
 };
+
+#macro BOARD_SIZE 5
+
+board = array_create(BOARD_SIZE);
+for (var i = 0; i < BOARD_SIZE; i++) {
+    board[i] = array_create(BOARD_SIZE);
+    for (var j = 0; j < BOARD_SIZE; j++) {
+        board[i][j] = GenerateElement(0);
+    }
+}
