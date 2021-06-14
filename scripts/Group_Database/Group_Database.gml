@@ -1,8 +1,9 @@
-function Element(name, symbol, number, valence, electro, class) constructor {
+function Element(name, symbol, number, valence, shell_size, electro, class) constructor {
     self.name = name;
     self.symbol = symbol;
     self.number = number;
     self.valence = valence;
+    self.shell_size = shell_size;
     self.electro = electro;
     self.class = class;
     
