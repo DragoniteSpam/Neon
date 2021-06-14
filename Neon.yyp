@@ -1,5 +1,6 @@
 {
   "resources": [
+    {"id":{"name":"spr_back","path":"sprites/spr_back/spr_back.yy",},"order":20,},
     {"id":{"name":"fnt_neon","path":"fonts/fnt_neon/fnt_neon.yy",},"order":19,},
     {"id":{"name":"fnt_neon_small","path":"fonts/fnt_neon_small/fnt_neon_small.yy",},"order":18,},
     {"id":{"name":"Game","path":"objects/Game/Game.yy",},"order":17,},
