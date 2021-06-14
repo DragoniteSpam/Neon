@@ -10,8 +10,7 @@ function Molecule() constructor {
             if (seen[$ self.id]) return;
             seen[$ self.id] = true;
             
-            //if (!self.Complete()) {
-            if (self.valence > 0 && self.valence < self.element.shell_size) {
+            if (!self.Complete()) {
                 var diff = node.element.electro - self.element.electro;
                 if (abs(diff) < 1.7) {      // covalent
                     var shared = min(node.element.shell_size - node.valence, self.element.shell_size - self.valence);
@@ -54,10 +53,21 @@ function Molecule() constructor {
         }
         
         function Complete() {
-            //show_debug_message([self.element.name, self.valence, self.element.shell_size])
             return (self.valence == 0 || self.valence == self.element.shell_size);
         }
         
+        function RawScore(seen) {
+            if (seen[$ self.id]) return 0;
+            seen[$ self.id] = true;
+            
+            var value = self.element.number;
+            for (var i = 0; i < array_length(self.bonds); i++) {
+                value += self.bonds[i].RawScore(seen);
+            }
+            
+            return value;
+        }
+            
         function toString() {
             return self.element.name + " (" + string(self.valence) + "/" + string(self.element.shell_size) + ")";
         }
@@ -76,8 +86,9 @@ function Molecule() constructor {
         return false;
     }
     
-    function Score() {
-        
+    function RawScore() {
+        if (self.root == 0) return 0;
+        return self.root.RawScore({ });
     }
     
     self.root = undefined;
