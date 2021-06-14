@@ -32,7 +32,34 @@ sodium                  = new Element("Sodium",     "Na",   11,     1,      0.87
 magnesium               = new Element("Magnesium",  "Mg",   12,     2,      1.29,       class_earth);
 aluminum                = new Element("Aluminum",   "Al",   13,     3,      1.61,       class_metal);
 silicon                 = new Element("Silicon",    "Si",   14,     4,      1.92,       class_semiconductor);
-phosohorus              = new Element("Phosphorus", "P",    15,     5,      2.25,       class_nonmetal);
+phosphorus              = new Element("Phosphorus", "P",    15,     5,      2.25,       class_nonmetal);
 sulfur                  = new Element("Sulfur",     "S",    16,     6,      2.59,       class_nonmetal);
 chlorine                = new Element("Chlorine",   "Cl",   17,     7,      2.87,       class_halogen);
 argon                   = new Element("Argon",      "Ar",   18,     8,      undefined,  class_noble);
+
+elements = [
+    [
+        { element: hydrogen,        weight: 2.5,    rank: 0 },
+        { element: helium,          weight: 0.8,    rank: 0 },
+        { element: lithium,         weight: 0.0,    rank: 0 },
+        { element: beryllium,       weight: 0.0,    rank: 0 },
+        { element: boron,           weight: 0.0,    rank: 0 },
+        { element: carbon,          weight: 0.0,    rank: 0 },      // i really don't want to do organic chemistry, thanks
+        { element: nitrogen,        weight: 1.5,    rank: 0 },
+        { element: oxygen,          weight: 2.5,    rank: 0 },
+    ],
+    [
+        { element: fluorine,        weight: 1.0,    rank: 1 },
+        { element: neon,            weight: 0.5,    rank: 1 },
+        { element: sodium,          weight: 0.8,    rank: 1 },
+    ],
+    [
+        { element: magnesium,       weight: 0.7,    rank: 2 },
+        { element: aluminum,        weight: 0.5,    rank: 2 },
+        { element: silicon,         weight: 0.0,    rank: 2 },
+        { element: phosphorus,      weight: 0.5,    rank: 2 },
+        { element: sulfur,          weight: 0.7,    rank: 2 },
+        { element: chlorine,        weight: 0.8,    rank: 2 },
+        { element: argon,           weight: 0.1,    rank: 2 },
+    ],
+];
