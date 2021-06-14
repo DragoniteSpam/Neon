@@ -10,15 +10,32 @@ function Molecule() constructor {
             if (seen[$ self.id]) return;
             seen[$ self.id] = true;
             
+            //if (!self.Complete()) {
             if (self.valence > 0 && self.valence < self.element.shell_size) {
-                if (node.element.electro > self.element.electro) {
-                    var will_give = min(node.element.shell_size - node.element.valence, self.element.shell_size - self.valence);
-                    node.valence += will_give;
-                    self.valence += will_give;
-                } else {
-                    var will_accept = min(self.element.shell_size - self.element.valence, node.element.shell_size - node.valence);
-                    node.valence += will_accept;
-                    self.valence += will_accept;
+                var diff = node.element.electro - self.element.electro;
+                if (abs(diff) < 1.7) {      // covalent
+                    var shared = min(node.element.shell_size - node.valence, self.element.shell_size - self.valence);
+                    self.valence += shared;
+                    node.valence += shared;
+                    repeat (shared) {
+                        self.Bond(node);
+                    }
+                    show_debug_message("Bonded " + string(self) + " to " + string(node) + " (covalent)");
+                } else {                    // ionic
+                    var donated;
+                    if (self.element.electro < node.element.electro) {
+                        donated = min(node.element.shell_size - node.valence, self.valence);
+                        self.valence -= donated;
+                        node.valence += donated;
+                    } else {
+                        donated = min(self.element.shell_size - self.valence, node.valence);
+                        self.valence += donated;
+                        node.valence -= donated;
+                    }
+                    repeat (donated) {
+                        self.Bond(node);
+                    }
+                    show_debug_message("Bonded " + string(self) + " to " + string(node) + " (ionic)");
                 }
                 self.Bond(node);
                 return true;
@@ -37,7 +54,12 @@ function Molecule() constructor {
         }
         
         function Complete() {
-            
+            //show_debug_message([self.element.name, self.valence, self.element.shell_size])
+            return (self.valence == 0 || self.valence == self.element.shell_size);
+        }
+        
+        function toString() {
+            return self.element.name + " (" + string(self.valence) + "/" + string(self.element.shell_size) + ")";
         }
     };
     
@@ -48,10 +70,9 @@ function Molecule() constructor {
             return;
         }
         if (!self.IsValid(element)) {
-            return;
+            //return;
         }
-        var seen = { };
-        self.root.Add(node, seen);
+        self.root.Add(node, { });
     }
     
     function IsValid(element) {
