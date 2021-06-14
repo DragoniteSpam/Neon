@@ -15,7 +15,9 @@ function Element(name, symbol, number, valence, electro, class) constructor {
         draw_sprite_ext(self.sprite, 0, x, y, 1, 1, 0, self.class.color, 1);
         draw_set_valign(fa_middle);
         draw_set_halign(fa_center);
+        draw_set_font(fnt_neon);
         draw_text_colour(x + width / 2, y + height / 2, self.symbol, c_black, c_black, c_black, c_black, 1);
+        draw_set_font(fnt_neon_small);
         draw_text_colour(x + width / 2, y + height - 20, self.number, c_black, c_black, c_black, c_black, 1);
         draw_set_halign(fa_right);
         draw_text_colour(x + width - 20, y + 20, string(self.electro), c_black, c_black, c_black, c_black, 1);

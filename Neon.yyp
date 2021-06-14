@@ -1,5 +1,7 @@
 {
   "resources": [
+    {"id":{"name":"fnt_neon","path":"fonts/fnt_neon/fnt_neon.yy",},"order":19,},
+    {"id":{"name":"fnt_neon_small","path":"fonts/fnt_neon_small/fnt_neon_small.yy",},"order":18,},
     {"id":{"name":"Game","path":"objects/Game/Game.yy",},"order":17,},
     {"id":{"name":"Group_Database","path":"scripts/Group_Database/Group_Database.yy",},"order":16,},
     {"id":{"name":"spr_card","path":"sprites/spr_card/spr_card.yy",},"order":15,},
