@@ -77,9 +77,12 @@ function Molecule() constructor {
         var node = new self.MoleculeNode(element);
         if (!self.root) {
             self.root = node;
+            self.score = element.number;
             return;
         }
-        self.root.Add(node, { });
+        if (self.root.Add(node, { })) {
+            self.score += element.number;
+        }
     }
     
     function IsComplete() {
@@ -91,5 +94,10 @@ function Molecule() constructor {
         return self.root.RawScore({ });
     }
     
+    function Score() {
+        return self.score;
+    }
+    
     self.root = undefined;
+    self.score = 0;
 }
