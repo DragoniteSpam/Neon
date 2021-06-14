@@ -85,16 +85,18 @@ function Molecule() constructor {
         array_push(self.log, node);
         if (element.electro == undefined) {
             self.score *= element.number;
-            return;
+            return true;
         }
         if (!self.root) {
             self.root = node;
             self.score = element.number;
-            return;
+            return true;
         }
         if (self.root.Add(node, { })) {
             self.score += element.number;
+            return true;
         }
+        return false;
     }
     
     function IsComplete() {
