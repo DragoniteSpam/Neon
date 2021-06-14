@@ -32,3 +32,27 @@ function Class(name, color) constructor {
     self.name = name;
     self.color = color;
 }
+
+function ElementCard(x, y, element) constructor {
+    self.x = x;
+    self.y = y;
+    self.element = element;
+    
+    self.mouseover = false;
+    
+    function draw() {
+        self.element.draw(self.x, self.y, self.mouseover);
+    }
+    
+    function mouse(mx, my) {
+        var x1 = self.x;
+        var y1 = self.y;
+        var x2 = sprite_get_width(self.element.sprite);
+        var y2 = sprite_get_height(self.element.sprite);
+        if (point_in_rectangle(mx, my, x1, y1, x2, y2)) {
+            self.mouseover = true;
+        } else {
+            self.mouseover = false;
+        }
+    }
+}
