@@ -20,7 +20,11 @@ function Element(name, symbol, number, valence, electro, class) constructor {
         draw_set_font(fnt_neon_small);
         draw_text_colour(x + width / 2, y + height - 20, self.number, c_black, c_black, c_black, c_black, 1);
         draw_set_halign(fa_right);
-        draw_text_colour(x + width - 20, y + 20, string(self.electro), c_black, c_black, c_black, c_black, 1);
+        if (self.electro != undefined) {
+            draw_text_colour(x + width - 20, y + 20, string(self.electro), c_black, c_black, c_black, c_black, 1);
+        } else {
+            draw_text_colour(x + width - 20, y + 20, "x" + string(self.number), c_black, c_black, c_black, c_black, 1);
+        }
     }
 }
 
