@@ -74,6 +74,10 @@ function Molecule() constructor {
     };
     
     function Add(element) {
+        if (element.electro == undefined) {
+            self.score *= element.number;
+            return;
+        }
         var node = new self.MoleculeNode(element);
         if (!self.root) {
             self.root = node;
