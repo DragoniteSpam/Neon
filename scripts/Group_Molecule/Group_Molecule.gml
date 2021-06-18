@@ -93,6 +93,7 @@ function Molecule() constructor {
         self.root = undefined;
         self.score = 0;
         self.log = [];
+        Game.player.EnableAll();
     }
     
     function Add(element) {

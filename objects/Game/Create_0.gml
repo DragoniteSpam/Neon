@@ -128,13 +128,19 @@ player = {
     
     tick: function() {
         if (!self.running) return;
-        for (var i = 0, n =array_length(self.board); i < n; i++) {
+        for (var i = 0, n = array_length(self.board); i < n; i++) {
             self.board[i].step(window_mouse_get_x(), window_mouse_get_y());
         }
         self.time -= delta_time / 1000000;
         if (self.time <= 0) {
             self.time = 0;
             self.running = false;
+        }
+    },
+    
+    EnableAll: function() {
+        for (var i = 0, n = array_length(self.board); i < n; i++) {
+            self.board[i].used = false;
         }
     },
 };
