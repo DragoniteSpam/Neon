@@ -227,20 +227,37 @@ function Molecule() constructor {
                 }
             }
         }
-        draw_set_halign(fa_center);
-        draw_set_valign(fa_center);
-        var xx = x - formula_width / 2;
-        for (var i = 0, n = array_length(formula); i < n; i++) {
-            if (formula[i] > 0) {
-                draw_set_font(fnt_neon);
-                draw_text_colour(xx, y, Game.periodic_table[i - 1].symbol, c_black, c_black, c_black, c_black, 1);
-                xx += string_width(Game.periodic_table[i - 1].symbol);
-                if (formula[i] > 1) {
-                    draw_set_font(fnt_neon_medium);
-                    draw_text_colour(xx - 8, y + 12, formula[i], c_red, c_red, c_red, c_red, 1);
-                    xx += string_width(" ");
+        if (formula_width > 0) {
+            draw_set_halign(fa_left);
+            draw_set_valign(fa_center);
+            var formula_surface = surface_create(formula_width * 2, 80);
+            surface_set_target(formula_surface);
+            draw_clear_alpha(c_black, 0);
+            var xx = 0;
+            var yy = 40;
+            for (var i = 0, n = array_length(formula); i < n; i++) {
+                if (formula[i] > 0) {
+                    draw_set_font(fnt_neon);
+                    draw_text_colour(xx, yy, Game.periodic_table[i - 1].symbol, c_white, c_white, c_white, c_white, 1);
+                    xx += string_width(Game.periodic_table[i - 1].symbol);
+                    if (formula[i] > 1) {
+                        draw_set_font(fnt_neon_medium);
+                        draw_text_colour(xx - 4, yy + 12, formula[i], c_yellow, c_yellow, c_yellow, c_yellow, 1);
+                        xx += string_width(" ");
+                    }
                 }
             }
+            surface_reset_target();
+            draw_surface_ext(formula_surface, x - formula_width / 2 - 1, y - 40 + 0, 1, 1, 0, c_black, 1);
+            draw_surface_ext(formula_surface, x - formula_width / 2 + 1, y - 40 + 0, 1, 1, 0, c_black, 1);
+            draw_surface_ext(formula_surface, x - formula_width / 2 + 0, y - 40 - 1, 1, 1, 0, c_black, 1);
+            draw_surface_ext(formula_surface, x - formula_width / 2 + 0, y - 40 + 1, 1, 1, 0, c_black, 1);
+            draw_surface_ext(formula_surface, x - formula_width / 2 - 1, y - 40 - 1, 1, 1, 0, c_black, 1);
+            draw_surface_ext(formula_surface, x - formula_width / 2 - 1, y - 40 + 1, 1, 1, 0, c_black, 1);
+            draw_surface_ext(formula_surface, x - formula_width / 2 + 1, y - 40 - 1, 1, 1, 0, c_black, 1);
+            draw_surface_ext(formula_surface, x - formula_width / 2 + 1, y - 40 + 1, 1, 1, 0, c_black, 1);
+            draw_surface(formula_surface, x - formula_width / 2, y - 40);
+            surface_free(formula_surface);
         }
     }
     
