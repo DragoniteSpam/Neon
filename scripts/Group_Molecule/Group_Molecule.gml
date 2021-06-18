@@ -130,18 +130,20 @@ function Molecule() constructor {
     
     function Add(element) {
         var node = new self.MoleculeNode(element);
-        array_push(self.log, node);
         if (element.electro == undefined) {
             self.score *= element.number;
+            array_push(self.log, node);
             return true;
         }
         if (!self.root) {
             self.root = node;
             self.score = element.number;
+            array_push(self.log, node);
             return true;
         }
         if (self.root.Add(node, { })) {
             self.score += element.number;
+            array_push(self.log, node);
             return true;
         }
         return false;
@@ -193,7 +195,9 @@ function Molecule() constructor {
     function GetFormula() {
         var elements = array_create(array_length(Game.periodic_table), 0);
         for (var i = 0, n = array_length(self.log); i < n; i++) {
-            elements[self.log[i].element.number]++;
+            if (self.log[i].element.valence > 0) {
+                elements[self.log[i].element.number]++;
+            }
         }
         return elements;
     }
