@@ -45,7 +45,7 @@ elements = [
         { element: lithium,         weight: 0.0 },
         { element: beryllium,       weight: 0.0 },
         { element: boron,           weight: 0.0 },
-        { element: carbon,          weight: 0.0 },  // i really don't want to do organic chemistry, thanks
+        { element: carbon,          weight: 1.0 },  // i really don't want to do organic chemistry but your choices for buliding atoms is limited by the number of elements on the grid
         { element: nitrogen,        weight: 1.5 },
         { element: oxygen,          weight: 2.5 },
     ],
@@ -106,3 +106,10 @@ for (var i = 0; i < BOARD_SIZE; i++) {
 
 molecule = new Molecule();
 #endregion
+
+vertex_format_begin();
+vertex_format_add_position_3d();
+format_atom = vertex_format_end();
+var data = buffer_load("sphere20.atom");
+vbuff_atom = vertex_create_buffer_from_buffer(data, format_atom);
+buffer_delete(data);
