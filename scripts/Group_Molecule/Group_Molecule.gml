@@ -89,6 +89,12 @@ function Molecule() constructor {
         };
     };
     
+    function Clear() {
+        self.root = undefined;
+        self.score = 0;
+        self.log = [];
+    }
+    
     function Add(element) {
         var node = new self.MoleculeNode(element);
         array_push(self.log, node);
