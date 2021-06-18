@@ -5,6 +5,7 @@
 #macro c_nonmetal       0x66cc00
 #macro c_semiconductor  0x669999
 #macro c_metal          0xbfbfbf
+#macro c_carbon         0x0099cc
 #macro c_halogen        0x0033ff
 #macro c_noble          0xcc66ff
 
@@ -14,6 +15,7 @@ class_earth             = new Class("Rare Earth Metals", c_earth);
 class_nonmetal          = new Class("Non-Metals", c_nonmetal);
 class_semiconductor     = new Class("Semiconductors", c_semiconductor);
 class_metal             = new Class("Metals", c_metal);
+class_carbon            = new Class("Halogens", c_carbon);              // yes i know, shut up
 class_halogen           = new Class("Halogens", c_halogen);
 class_noble             = new Class("Noble Gasses", c_noble);
 
@@ -23,7 +25,7 @@ helium                  = new Element("Helium",     "He",   02,     0,      2,  
 lithium                 = new Element("Lithium",    "Li",   03,     1,      8,      0.91,       class_alkali);
 beryllium               = new Element("Beryllium",  "Be",   04,     2,      8,      1.58,       class_earth);
 boron                   = new Element("Boron",      "B",    05,     3,      8,      2.05,       class_semiconductor);
-carbon                  = new Element("Carbon",     "C",    06,     4,      8,      2.54,       class_nonmetal);
+carbon                  = new Element("Carbon",     "C",    06,     4,      8,      2.54,       class_carbon);
 nitrogen                = new Element("Nitrogen",   "N",    07,     5,      8,      3.07,       class_nonmetal);
 oxygen                  = new Element("Oxygen",     "O",    08,     6,      8,      3.61,       class_nonmetal);
 fluorine                = new Element("Fluorine",   "F",    09,     7,      8,      4.19,       class_halogen);
