@@ -20,7 +20,7 @@ function Molecule() constructor {
             if (!self.Complete()) {
                 var diff = node.element.electro - self.element.electro;
                 if (abs(diff) < 1.7) {      // covalent
-                    var shared = min(node.element.shell_size - node.valence, self.element.shell_size - self.valence);
+                    var shared = min(node.element.shell_size - node.valence, self.element.shell_size - self.valence, 3);
                     self.valence += shared;
                     node.valence += shared;
                     repeat (shared) {
@@ -30,11 +30,11 @@ function Molecule() constructor {
                 } else {                    // ionic
                     var donated;
                     if (self.element.electro < node.element.electro) {
-                        donated = min(node.element.shell_size - node.valence, self.valence);
+                        donated = min(node.element.shell_size - node.valence, self.valence, 3);
                         self.valence -= donated;
                         node.valence += donated;
                     } else {
-                        donated = min(self.element.shell_size - self.valence, node.valence);
+                        donated = min(self.element.shell_size - self.valence, node.valence, 3);
                         self.valence += donated;
                         node.valence -= donated;
                     }
