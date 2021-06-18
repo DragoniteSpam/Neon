@@ -84,7 +84,7 @@ function Molecule() constructor {
             return self.element.name + " (" + string(self.valence) + "/" + string(self.element.shell_size) + ")";
         }
         
-        function draw(x, y, seen, symbols = false, in_angle = 0) {
+        function draw(x, y, seen, symbols = false, in_angle = 0, from = undefined) {
             if (seen[$ self.id]) return;
             seen[$ self.id] = true;
             static uniform_color = shader_get_uniform(shd_atom, "color");
@@ -109,7 +109,8 @@ function Molecule() constructor {
                     var next = Game.player.molecule.get(keys[i]);
                     var radius = max(self.element.radius, next.element.radius);
                     var angle = slot * spacing + in_angle;
-                    next.draw(x + radius * cos(angle), y - radius * sin(angle), seen, symbols, angle);
+                    if (from == next) slot++;
+                    next.draw(x + radius * cos(angle), y - radius * sin(angle), seen, symbols, angle, self);
                     slot++;
                 }
             }
