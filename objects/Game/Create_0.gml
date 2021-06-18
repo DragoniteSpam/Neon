@@ -67,7 +67,8 @@ elements = [
 #endregion
 
 #region game setup
-#macro c_used 0x3f3f3f
+#macro c_hover      0xbfbfbf
+#macro c_used       0x3f3f3f
 #macro BOARD_SIZE 5
 #macro STARTING_TIME 60
 

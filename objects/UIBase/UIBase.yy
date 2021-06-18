@@ -36,7 +36,7 @@
     "path": "Neon.yyp",
   },
   "resourceVersion": "1.0",
-  "name": "UIObject",
+  "name": "UIBase",
   "tags": [],
   "resourceType": "GMObject",
 }

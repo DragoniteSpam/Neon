@@ -1,10 +1,11 @@
 {
   "resources": [
     {"id":{"name":"spr_back","path":"sprites/spr_back/spr_back.yy",},"order":20,},
+    {"id":{"name":"UIButton","path":"objects/UIButton/UIButton.yy",},"order":25,},
     {"id":{"name":"fnt_neon","path":"fonts/fnt_neon/fnt_neon.yy",},"order":19,},
     {"id":{"name":"Group_Molecule","path":"scripts/Group_Molecule/Group_Molecule.yy",},"order":21,},
     {"id":{"name":"fnt_neon_small","path":"fonts/fnt_neon_small/fnt_neon_small.yy",},"order":18,},
-    {"id":{"name":"UIObject","path":"objects/UIObject/UIObject.yy",},"order":23,},
+    {"id":{"name":"UIBase","path":"objects/UIBase/UIBase.yy",},"order":23,},
     {"id":{"name":"Game","path":"objects/Game/Game.yy",},"order":17,},
     {"id":{"name":"Group_Database","path":"scripts/Group_Database/Group_Database.yy",},"order":16,},
     {"id":{"name":"fnt_neon_medium","path":"fonts/fnt_neon_medium/fnt_neon_medium.yy",},"order":24,},
