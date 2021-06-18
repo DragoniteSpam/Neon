@@ -2,9 +2,11 @@ function Molecule() constructor {
     static MoleculeNode = function(element) constructor {
         static atom_id = 0;
         self.element = element;
-        self.id = atom_id++;
-        self.bonds = [];
+        self.id = string(atom_id++);
+        self.bonds = { };
         self.valence = element.valence;
+        
+        Game.player.molecule.set(self);
         
         function Add(node, seen) {
             if (seen[$ self.id]) return;
@@ -47,16 +49,19 @@ function Molecule() constructor {
                 return true;
             }
             
-            for (var i = 0; i < array_length(self.bonds); i++) {
-                if (self.bonds[i].Add(node, seen)) return true;
+            var keys = variable_struct_get_names(self.bonds);
+            for (var i = 0; i < array_length(keys); i++) {
+                if (Game.player.molecule.get(keys[i]).Add(node, seen)) return true;
             }
             
             return false;
         }
         
         function Bond(node) {
-            array_push(self.bonds, node);
-            array_push(node.bonds, self);
+            if (!variable_struct_exists(self.bonds, node.id)) self.bonds[$ node.id] = 0;
+            if (!variable_struct_exists(node.bonds, self.id)) node.bonds[$ self.id] = 0;
+            self.bonds[$ node.id]++;
+            node.bonds[$ self.id]++;
         }
         
         function Complete() {
@@ -68,8 +73,9 @@ function Molecule() constructor {
             seen[$ self.id] = true;
             
             var value = self.element.number;
-            for (var i = 0; i < array_length(self.bonds); i++) {
-                value += self.bonds[i].RawScore(seen);
+            var keys = variable_struct_get_names(self.bonds);
+            for (var i = 0; i < array_length(keys); i++) {
+                value += Game.player.molecule.get(keys[i]).RawScore(seen);
             }
             
             return value;
@@ -80,7 +86,7 @@ function Molecule() constructor {
         }
         
         function draw(x, y, seen, symbols = false) {
-            if (seen[$ self.id]) return false;
+            if (seen[$ self.id]) return;
             seen[$ self.id] = true;
             static uniform_color = shader_get_uniform(shd_atom, "color");
             
@@ -96,23 +102,15 @@ function Molecule() constructor {
                 Game.player.molecule.AdjustDrawBounds(x, y);
             }
             
-            var unique_atoms = { };
-            for (var i = 0, n = array_length(self.bonds); i < n; i++) {
-                unique_atoms[$ self.bonds[i].id] = self.bonds[i];
-            }
-            var keys = variable_struct_get_names(unique_atoms);
+            var keys = variable_struct_get_names(self.bonds);
             if (array_length(keys) > 0) {
                 var spacing = 2 * pi / array_length(keys);
-                var slot = 0;
-                for (var i = 0, n = array_length(keys); i < n; i++) {
-                    var next = unique_atoms[$ keys[i]];
+                for (var i = 0; i < array_length(keys); i++) {
+                    var next = Game.player.molecule.get(keys[i]);
                     var radius = max(self.element.radius, next.element.radius);
-                    if (next.draw(x + radius * cos(slot * spacing), y - radius * sin(slot * spacing), seen, symbols)) {
-                        slot++;
-                    }
+                    next.draw(x + radius * cos(i * spacing), y - radius * sin(i * spacing), seen, symbols);
                 }
             }
-            return true;
         };
     };
     
@@ -120,6 +118,8 @@ function Molecule() constructor {
         self.root = undefined;
         self.score = 0;
         self.log = [];
+        
+        self.all_nodes = { };
         
         self.draw_min = { x: 0, y: 0 };
         self.draw_max = { x: 0, y: 0 };
@@ -233,6 +233,14 @@ function Molecule() constructor {
     self.root = undefined;
     self.score = 0;
     self.log = [];
+    
+    static all_nodes = { };
+    function get(id) {
+        return self.all_nodes[$ id];
+    }
+    function set(node) {
+        self.all_nodes[$ node.id] = node;
+    }
     
     self.x = room_width * 3 / 4;
     self.y = room_height / 2;
