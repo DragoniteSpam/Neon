@@ -15,11 +15,14 @@
   "layers": [
     {"instances":[
         {"properties":[
-            {"propertyId":{"name":"text","path":"objects/UIObject/UIObject.yy",},"objectId":{"name":"UIObject","path":"objects/UIObject/UIObject.yy",},"value":"Score:","resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMOverriddenProperty",},
-          ],"isDnd":false,"objectId":{"name":"UIObject","path":"objects/UIObject/UIObject.yy",},"inheritCode":false,"hasCreationCode":true,"colour":4294967295,"rotation":0.0,"scaleX":1.75,"scaleY":0.5,"imageIndex":0,"imageSpeed":1.0,"inheritedItemId":null,"frozen":false,"ignore":false,"inheritItemSettings":false,"x":832.0,"y":32.0,"resourceVersion":"1.0","name":"inst_score","tags":[],"resourceType":"GMRInstance",},
+            {"propertyId":{"name":"text","path":"objects/UIBase/UIBase.yy",},"objectId":{"name":"UIBase","path":"objects/UIBase/UIBase.yy",},"value":"Score:","resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMOverriddenProperty",},
+          ],"isDnd":false,"objectId":{"name":"UIBase","path":"objects/UIBase/UIBase.yy",},"inheritCode":false,"hasCreationCode":true,"colour":4294967295,"rotation":0.0,"scaleX":1.75,"scaleY":0.5,"imageIndex":0,"imageSpeed":1.0,"inheritedItemId":null,"frozen":false,"ignore":false,"inheritItemSettings":false,"x":832.0,"y":32.0,"resourceVersion":"1.0","name":"inst_score","tags":[],"resourceType":"GMRInstance",},
         {"properties":[
-            {"propertyId":{"name":"text","path":"objects/UIObject/UIObject.yy",},"objectId":{"name":"UIObject","path":"objects/UIObject/UIObject.yy",},"value":"Time:","resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMOverriddenProperty",},
-          ],"isDnd":false,"objectId":{"name":"UIObject","path":"objects/UIObject/UIObject.yy",},"inheritCode":false,"hasCreationCode":true,"colour":4294967295,"rotation":0.0,"scaleX":1.75,"scaleY":0.5,"imageIndex":0,"imageSpeed":1.0,"inheritedItemId":null,"frozen":false,"ignore":false,"inheritItemSettings":false,"x":1088.0,"y":32.0,"resourceVersion":"1.0","name":"inst_time","tags":[],"resourceType":"GMRInstance",},
+            {"propertyId":{"name":"text","path":"objects/UIBase/UIBase.yy",},"objectId":{"name":"UIBase","path":"objects/UIBase/UIBase.yy",},"value":"Time:","resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMOverriddenProperty",},
+          ],"isDnd":false,"objectId":{"name":"UIBase","path":"objects/UIBase/UIBase.yy",},"inheritCode":false,"hasCreationCode":true,"colour":4294967295,"rotation":0.0,"scaleX":1.75,"scaleY":0.5,"imageIndex":0,"imageSpeed":1.0,"inheritedItemId":null,"frozen":false,"ignore":false,"inheritItemSettings":false,"x":1088.0,"y":32.0,"resourceVersion":"1.0","name":"inst_time","tags":[],"resourceType":"GMRInstance",},
+        {"properties":[
+            {"propertyId":{"name":"text","path":"objects/UIBase/UIBase.yy",},"objectId":{"name":"UIBase","path":"objects/UIBase/UIBase.yy",},"value":"Reset Molecule","resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMOverriddenProperty",},
+          ],"isDnd":false,"objectId":{"name":"UIButton","path":"objects/UIButton/UIButton.yy",},"inheritCode":false,"hasCreationCode":true,"colour":4294967295,"rotation":0.0,"scaleX":2.0,"scaleY":0.5,"imageIndex":0,"imageSpeed":1.0,"inheritedItemId":null,"frozen":false,"ignore":false,"inheritItemSettings":false,"x":1088.0,"y":672.0,"resourceVersion":"1.0","name":"inst_reset","tags":[],"resourceType":"GMRInstance",},
       ],"visible":true,"depth":0,"userdefinedDepth":false,"inheritLayerDepth":false,"inheritLayerSettings":false,"gridX":32,"gridY":32,"layers":[],"hierarchyFrozen":false,"resourceVersion":"1.0","name":"UI_Game","tags":[],"resourceType":"GMRInstanceLayer",},
     {"instances":[
         {"properties":[],"isDnd":false,"objectId":{"name":"Game","path":"objects/Game/Game.yy",},"inheritCode":false,"hasCreationCode":false,"colour":4294967295,"rotation":0.0,"scaleX":1.0,"scaleY":1.0,"imageIndex":0,"imageSpeed":1.0,"inheritedItemId":null,"frozen":false,"ignore":false,"inheritItemSettings":false,"x":160.0,"y":128.0,"resourceVersion":"1.0","name":"inst_62BA1419","tags":[],"resourceType":"GMRInstance",},
@@ -33,6 +36,7 @@
     {"name":"inst_62BA1419","path":"rooms/Room1/Room1.yy",},
     {"name":"inst_score","path":"rooms/Room1/Room1.yy",},
     {"name":"inst_time","path":"rooms/Room1/Room1.yy",},
+    {"name":"inst_reset","path":"rooms/Room1/Room1.yy",},
   ],
   "inheritCreationOrder": false,
   "sequenceId": null,
