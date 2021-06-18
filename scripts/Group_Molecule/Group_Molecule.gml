@@ -83,7 +83,7 @@ function Molecule() constructor {
             if (seen[$ self.id]) return false;
             seen[$ self.id] = true;
             static uniform_color = shader_get_uniform(shd_atom, "color");
-            matrix_set(matrix_world, matrix_build(x, y, 0, 0, 0, 0, self.element.radius, self.element.radius, self.element.radius));
+            matrix_set(matrix_world, matrix_build(x, y, 0, 0, 0, 0, self.element.radius, self.element.radius, -self.element.radius));
             shader_set_uniform_f(uniform_color, ((self.element.class.color >> 0) & 0xff) / 0xff, ((self.element.class.color >> 8) & 0xff) / 0xff, ((self.element.class.color >> 16) & 0xff) / 0xff);
             vertex_submit(Game.vbuff_atom, pr_trianglelist, -1);
             
@@ -150,8 +150,14 @@ function Molecule() constructor {
     function draw(x, y) {
         if (!self.root) return;
         shader_set(shd_atom);
+        gpu_set_ztestenable(true);
+        gpu_set_zwriteenable(true);
+        gpu_set_cullmode(cull_counterclockwise);
         self.root.draw(x, y, { });
         shader_reset();
+        gpu_set_ztestenable(false);
+        gpu_set_zwriteenable(false);
+        gpu_set_cullmode(cull_noculling);
         matrix_set(matrix_world, matrix_build_identity());
     }
     
