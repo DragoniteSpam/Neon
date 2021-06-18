@@ -51,7 +51,7 @@ elements = [
         { element: lithium,         weight: 0.0 },
         { element: beryllium,       weight: 0.0 },
         { element: boron,           weight: 0.0 },
-        { element: carbon,          weight: 1.0 },  // i really don't want to do organic chemistry but your choices for buliding atoms is limited by the number of elements on the grid
+        { element: carbon,          weight: 1.0 },
         { element: nitrogen,        weight: 1.5 },
         { element: oxygen,          weight: 2.5 },
     ],
@@ -78,6 +78,7 @@ elements = [
 #macro BOARD_SIZE               5
 #macro STARTING_TIME            60
 #macro WRONGNESS_PENALTY        0.75
+#macro CARBON_LIMIT             2                           // organic chemistry makes this really bad, let's not do it
 
 board_start_x = 32;
 board_start_y = 32;
@@ -99,10 +100,18 @@ player = {
     running: false,
     
     fill: function() {
+        var carbons = 0;
+        for (var i = 0, n = array_length(self.board); i < n; i++) {
+            if (self.board[i] && self.board[i].element == Game.carbon) carbons++;
+        }
         for (var i = 0, n = array_length(self.board); i < n; i++) {
             var col = i div BOARD_SIZE;
             var row = i mod BOARD_SIZE;
-            self.board[i] = new ElementCard(Game.board_start_x + col * Game.board_spacing, Game.board_start_y + row * Game.board_spacing, self.generate(0));
+            do {
+                if (self.board[i] && self.board[i].element == Game.carbon) carbons--;
+                self.board[i] = new ElementCard(Game.board_start_x + col * Game.board_spacing, Game.board_start_y + row * Game.board_spacing, self.generate(0));
+                if (self.board[i].element == Game.carbon) carbons++;
+            } until (carbons <= CARBON_LIMIT);
         }
     },
     
