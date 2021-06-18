@@ -175,8 +175,8 @@ function Molecule() constructor {
         self.draw_min.y = min(self.draw_min.y, y - self.y);
         self.draw_max.x = max(self.draw_max.x, x - self.x);
         self.draw_max.y = max(self.draw_max.y, y - self.y);
-        self.draw_center.x = mean(self.draw_min.x, self.draw_max.x);
-        self.draw_center.y = mean(self.draw_min.y, self.draw_max.y);
+        self.draw_center.x = lerp(self.draw_center.x, mean(self.draw_min.x, self.draw_max.x), 0.1);
+        self.draw_center.y = lerp(self.draw_center.y, mean(self.draw_min.y, self.draw_max.y), 0.1);
     }
     
     self.root = undefined;
