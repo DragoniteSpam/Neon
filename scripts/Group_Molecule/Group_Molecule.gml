@@ -96,7 +96,9 @@ function Molecule() constructor {
                 var spacing = 2 * pi / array_length(keys);
                 var slot = 0;
                 for (var i = 0, n = array_length(keys); i < n; i++) {
-                    if (unique_atoms[$ keys[i]].draw(x + self.element.radius * cos(slot * spacing), y - self.element.radius * sin(slot * spacing), seen)) {
+                    var next = unique_atoms[$ keys[i]];
+                    var radius = max(self.element.radius, next.element.radius);
+                    if (next.draw(x + radius * cos(slot * spacing), y - radius * sin(slot * spacing), seen)) {
                         slot++;
                     }
                 }
