@@ -27,6 +27,8 @@ function Element(name, symbol, number, valence, shell_size, electro, class) cons
         draw_set_halign(fa_right);
         if (self.electro != undefined) {
             draw_text_colour(x + width - 20, y + 20, string(self.electro), c_black, c_black, c_black, c_black, 1);
+            draw_set_halign(fa_left);
+            draw_text_colour(x + 20, y + 20, string(self.valence) + "/" + string(self.shell_size), c_black, c_black, c_black, c_black, 1);
         } else {
             draw_text_colour(x + width - 20, y + 20, "x" + string(self.number), c_black, c_black, c_black, c_black, 1);
         }
