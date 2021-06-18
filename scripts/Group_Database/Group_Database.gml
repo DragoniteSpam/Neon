@@ -65,7 +65,7 @@ function ElementCard(x, y, element) constructor {
                 if (Game.player.molecule.Add(self.element)) {
                     self.used = true;
                 } else {
-                    self.player.time *= WRONGNESS_PENALTY;
+                    Game.player.time *= WRONGNESS_PENALTY;
                 }
             }
         } else {
