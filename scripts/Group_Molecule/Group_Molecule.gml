@@ -45,7 +45,6 @@ function Molecule() constructor {
                     }
                     show_debug_message("Bonded " + string(self) + " to " + string(node) + " (ionic)");
                 }
-                self.Bond(node);
                 return true;
             }
             
