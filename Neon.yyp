@@ -7,6 +7,7 @@
     {"id":{"name":"UIObject","path":"objects/UIObject/UIObject.yy",},"order":23,},
     {"id":{"name":"Game","path":"objects/Game/Game.yy",},"order":17,},
     {"id":{"name":"Group_Database","path":"scripts/Group_Database/Group_Database.yy",},"order":16,},
+    {"id":{"name":"fnt_neon_medium","path":"fonts/fnt_neon_medium/fnt_neon_medium.yy",},"order":24,},
     {"id":{"name":"spr_card","path":"sprites/spr_card/spr_card.yy",},"order":15,},
     {"id":{"name":"shd_atom","path":"shaders/shd_atom/shd_atom.yy",},"order":22,},
     {"id":{"name":"Room1","path":"rooms/Room1/Room1.yy",},"order":14,},

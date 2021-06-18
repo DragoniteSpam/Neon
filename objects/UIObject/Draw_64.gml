@@ -14,4 +14,5 @@ draw_sprite_stretched(sprite_index, 0, x, y, sprite_width, sprite_height);
 draw_sprite_stretched(sprite_index, 1, x, y, sprite_width, sprite_height);
 draw_set_halign(fa_center);
 draw_set_valign(fa_middle);
+draw_set_font(fnt_neon_medium);
 draw_text_ext_colour(xt, yt, self.text, -1, sprite_width, c_black, c_black, c_black, c_black, 1);
