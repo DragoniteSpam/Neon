@@ -66,29 +66,6 @@ elements = [
 ];
 #endregion
 
-#region function setup
-function GenerateElement(rank) {
-    var max_weight = 0;
-    for (var i = 0; i < min(rank + 1, array_length(self.elements)); i++) {
-        for (var j = 0; j < array_length(self.elements[i]); j++) {
-            max_weight += self.elements[i][j].weight;
-        }
-    }
-    var rng = random(max_weight - 1);
-    var allotted_weight = 0;
-    for (var i = 0; i < min(rank + 1, array_length(self.elements)); i++) {
-        for (var j = 0; j < array_length(self.elements[i]); j++) {
-            allotted_weight += self.elements[i][j].weight;
-            if (allotted_weight >= rng) {
-                return self.elements[i][j].element;
-            }
-        }
-    }
-    
-    return self.hydrogen;
-};
-#endregion
-
 #region game setup
 #macro BOARD_SIZE 5
 
@@ -96,20 +73,48 @@ board_start_x = 32;
 board_start_y = 32;
 board_spacing = 130;
 
-board = array_create(BOARD_SIZE);
-for (var i = 0; i < BOARD_SIZE; i++) {
-    board[i] = array_create(BOARD_SIZE);
-    for (var j = 0; j < BOARD_SIZE; j++) {
-        board[i][j] = new ElementCard(board_start_x + i * board_spacing, board_start_y + j * board_spacing, GenerateElement(0));
-    }
-}
-
-molecule = new Molecule();
-#endregion
-
 vertex_format_begin();
 vertex_format_add_position_3d();
 format_atom = vertex_format_end();
 var data = buffer_load("sphere20.atom");
 vbuff_atom = vertex_create_buffer_from_buffer(data, format_atom);
 buffer_delete(data);
+#endregion
+
+#region player stuff
+player = {
+    board: array_create(BOARD_SIZE * BOARD_SIZE, undefined),
+    molecule: new Molecule(),
+    
+    fill: function() {
+        for (var i = 0, n = array_length(self.board); i < n; i++) {
+            var col = i div BOARD_SIZE;
+            var row = i mod BOARD_SIZE;
+            self.board[i] = new ElementCard(Game.board_start_x + col * Game.board_spacing, Game.board_start_y + row * Game.board_spacing, self.generate(0));
+        }
+    },
+    
+    generate: function(rank) {
+        var max_weight = 0;
+        for (var i = 0; i < min(rank + 1, array_length(Game.elements)); i++) {
+            for (var j = 0; j < array_length(Game.elements[i]); j++) {
+                max_weight += Game.elements[i][j].weight;
+            }
+        }
+        var rng = random(max_weight - 1);
+        var allotted_weight = 0;
+        for (var i = 0; i < min(rank + 1, array_length(Game.elements)); i++) {
+            for (var j = 0; j < array_length(Game.elements[i]); j++) {
+                allotted_weight += Game.elements[i][j].weight;
+                if (allotted_weight >= rng) {
+                    return Game.elements[i][j].element;
+                }
+            }
+        }
+    
+        return Game.hydrogen;
+    },
+};
+#endregion
+
+player.fill();

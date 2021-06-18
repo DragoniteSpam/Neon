@@ -62,7 +62,7 @@ function ElementCard(x, y, element) constructor {
         if (point_in_rectangle(mx, my, x1, y1, x2, y2)) {
             self.mouseover = true;
             if (mouse_check_button_pressed(mb_left)) {
-                if (Game.molecule.Add(self.element)) {
+                if (Game.player.molecule.Add(self.element)) {
                     self.used = true;
                 } else {
                     
