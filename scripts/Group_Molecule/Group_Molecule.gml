@@ -80,12 +80,28 @@ function Molecule() constructor {
         }
         
         function draw(x, y, seen) {
-            if (seen[$ self.id]) return;
+            if (seen[$ self.id]) return false;
             seen[$ self.id] = true;
             static uniform_color = shader_get_uniform(shd_atom, "color");
             matrix_set(matrix_world, matrix_build(x, y, 0, 0, 0, 0, self.element.radius, self.element.radius, self.element.radius));
             shader_set_uniform_f(uniform_color, ((self.element.class.color >> 0) & 0xff) / 0xff, ((self.element.class.color >> 8) & 0xff) / 0xff, ((self.element.class.color >> 16) & 0xff) / 0xff);
             vertex_submit(Game.vbuff_atom, pr_trianglelist, -1);
+            
+            var unique_atoms = { };
+            for (var i = 0, n = array_length(self.bonds); i < n; i++) {
+                unique_atoms[$ self.bonds[i].id] = self.bonds[i];
+            }
+            var keys = variable_struct_get_names(unique_atoms);
+            if (array_length(keys) > 0) {
+                var spacing = 2 * pi / array_length(keys);
+                var slot = 0;
+                for (var i = 0, n = array_length(keys); i < n; i++) {
+                    if (unique_atoms[$ keys[i]].draw(x + self.element.radius * cos(slot * spacing), y - self.element.radius * sin(slot * spacing), seen)) {
+                        slot++;
+                    }
+                }
+            }
+            return true;
         };
     };
     

@@ -8,7 +8,7 @@ function Element(name, symbol, number, valence, shell_size, electro, class) cons
     self.class = class;
     
     self.sprite = spr_card;
-    self.radius = 1 + sqrt(self.number);
+    self.radius = 12 * (1 + sqrt(self.number));
     
     function draw(x, y, mouseover, used) {
         var width = sprite_get_height(self.sprite);
