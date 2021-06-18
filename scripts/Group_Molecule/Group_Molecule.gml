@@ -83,7 +83,7 @@ function Molecule() constructor {
             if (seen[$ self.id]) return;
             seen[$ self.id] = true;
             
-            matrix_set(matrix_world, matrix_build(x, y, 0, 0, 0, 0, 1, 1, 1));
+            matrix_set(matrix_world, matrix_build(x, y, 0, 0, 0, 0, self.element.radius, self.element.radius, self.element.radius));
             vertex_submit(Game.vbuff_atom, pr_trianglelist, -1);
         };
     };
