@@ -83,9 +83,11 @@ function Molecule() constructor {
             if (seen[$ self.id]) return false;
             seen[$ self.id] = true;
             static uniform_color = shader_get_uniform(shd_atom, "color");
-            matrix_set(matrix_world, matrix_build(x, y, 0, 0, 0, 0, self.element.radius, self.element.radius, -self.element.radius));
+            matrix_set(matrix_world, matrix_build(x - Game.player.molecule.draw_center.x, y - Game.player.molecule.draw_center.y, 0, 0, 0, 0, self.element.radius, self.element.radius, -self.element.radius));
             shader_set_uniform_f(uniform_color, ((self.element.class.color >> 0) & 0xff) / 0xff, ((self.element.class.color >> 8) & 0xff) / 0xff, ((self.element.class.color >> 16) & 0xff) / 0xff);
             vertex_submit(Game.vbuff_atom, pr_trianglelist, -1);
+            
+            Game.player.molecule.AdjustDrawBounds(x, y);
             
             var unique_atoms = { };
             for (var i = 0, n = array_length(self.bonds); i < n; i++) {
@@ -111,6 +113,11 @@ function Molecule() constructor {
         self.root = undefined;
         self.score = 0;
         self.log = [];
+        
+        self.draw_min = { x: 0, y: 0 };
+        self.draw_max = { x: 0, y: 0 };
+        self.draw_center = { x: 0, y: 0 };
+        
         Game.player.EnableAll();
     }
     
@@ -149,13 +156,13 @@ function Molecule() constructor {
         return self.score;
     }
     
-    function draw(x, y) {
+    function draw() {
         if (!self.root) return;
         shader_set(shd_atom);
         gpu_set_ztestenable(true);
         gpu_set_zwriteenable(true);
         gpu_set_cullmode(cull_counterclockwise);
-        self.root.draw(x, y, { });
+        self.root.draw(self.x, self.y, { });
         shader_reset();
         gpu_set_ztestenable(false);
         gpu_set_zwriteenable(false);
@@ -163,7 +170,22 @@ function Molecule() constructor {
         matrix_set(matrix_world, matrix_build_identity());
     }
     
+    function AdjustDrawBounds(x, y) {
+        self.draw_min.x = min(self.draw_min.x, x - self.x);
+        self.draw_min.y = min(self.draw_min.y, y - self.y);
+        self.draw_max.x = max(self.draw_max.x, x - self.x);
+        self.draw_max.y = max(self.draw_max.y, y - self.y);
+        self.draw_center.x = mean(self.draw_min.x, self.draw_max.x);
+        self.draw_center.y = mean(self.draw_min.y, self.draw_max.y);
+    }
+    
     self.root = undefined;
     self.score = 0;
     self.log = [];
+    
+    self.x = room_width * 3 / 4;
+    self.y = room_height / 2;
+    self.draw_min = { x: 0, y: 0 };
+    self.draw_max = { x: 0, y: 0 };
+    self.draw_center = { x: 0, y: 0 };
 }
