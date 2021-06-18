@@ -80,10 +80,11 @@ function Molecule() constructor {
         }
         
         function draw(x, y, seen) {
-            if (seen[$ self.id]) return 0;
+            if (seen[$ self.id]) return;
             seen[$ self.id] = true;
             
-            draw_circle_colour(x, y, 16, c_red, c_red, false);
+            matrix_set(matrix_world, matrix_build(x, y, 0, 0, 0, 0, 1, 1, 1));
+            vertex_submit(Game.vbuff_atom, pr_trianglelist, -1);
         };
     };
     
@@ -124,7 +125,10 @@ function Molecule() constructor {
     
     function draw(x, y) {
         if (!self.root) return;
+        shader_set(shd_atom);
         self.root.draw(x, y, { });
+        shader_reset();
+        matrix_set(matrix_world, matrix_build_identity());
     }
     
     self.root = undefined;
