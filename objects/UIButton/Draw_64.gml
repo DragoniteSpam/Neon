@@ -12,8 +12,9 @@ var yt = y + sprite_height / 2;
 
 var mouseover = point_in_rectangle(window_mouse_get_x(), window_mouse_get_y(), x1, y1, x2, y2);
 
+draw_sprite_stretched_ext(sprite_index, 0, x, y, sprite_width, sprite_height, mouseover ? c_hover : c_white, 1);
 draw_sprite_stretched_ext(sprite_index, 1, x, y, sprite_width, sprite_height, mouseover ? c_hover : c_white, 1);
-draw_sprite_stretched_ext(sprite_index, 0, x, y, sprite_width, sprite_height, c_black, 1);
+draw_sprite_stretched_ext(sprite_index, 2, x, y, sprite_width, sprite_height, c_black, 1);
 draw_set_halign(fa_center);
 draw_set_valign(fa_middle);
 draw_set_font(fnt_neon_medium);
