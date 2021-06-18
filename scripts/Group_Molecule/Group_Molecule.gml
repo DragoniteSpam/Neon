@@ -84,7 +84,7 @@ function Molecule() constructor {
             return self.element.name + " (" + string(self.valence) + "/" + string(self.element.shell_size) + ")";
         }
         
-        function draw(x, y, seen, symbols = false, in_angle = 0, from = undefined) {
+        function draw(x, y, seen, symbols = false, starting_angle = undefined, from = undefined) {
             if (seen[$ self.id]) return;
             seen[$ self.id] = true;
             static uniform_color = shader_get_uniform(shd_atom, "color");
@@ -103,15 +103,26 @@ function Molecule() constructor {
             
             var keys = variable_struct_get_names(self.bonds);
             if (array_length(keys) > 0) {
-                var spacing = 2 * pi / array_length(keys);
+                var spacing = 360 / array_length(keys);
+                
+                var angles_used = { };
+                if (starting_angle != undefined) {
+                    angles_used[$ (starting_angle + 180) % 360] = true;
+                } else {
+                    starting_angle = 0;
+                }
+                
                 var slot = 0;
-                for (var i = 0; i < array_length(keys); i++) {
+                for (var i = 0, n = array_length(keys); i < n; i++) {
                     var next = Game.player.molecule.get(keys[i]);
+                    if (next == from) continue;
+                    var angle;
+                    do {
+                        angle = (slot++ * spacing + starting_angle + 180) % 360;
+                    } until (!angles_used[$ angle]);
+                    angles_used[$ angle] = true;
                     var radius = max(self.element.radius, next.element.radius);
-                    var angle = slot * spacing + in_angle;
-                    if (from == next) slot++;
-                    next.draw(x + radius * cos(angle), y - radius * sin(angle), seen, symbols, angle, self);
-                    slot++;
+                    next.draw(x + radius * dcos(angle), y - radius * dsin(angle), seen, symbols, angle, self);
                 }
             }
         };
