@@ -9,13 +9,14 @@ function Element(name, symbol, number, valence, shell_size, electro, class) cons
     
     self.sprite = spr_card;
     
-    function draw(x, y, mouseover) {
+    function draw(x, y, mouseover, used) {
         var width = sprite_get_height(self.sprite);
         var height = sprite_get_width(self.sprite);
+        var c = used ? c_used : self.class.color;
         draw_sprite(self.sprite, 1, x, y);
-        draw_sprite_ext(self.sprite, 0, x, y, 1, 1, 0, self.class.color, 1);
+        draw_sprite_ext(self.sprite, 0, x, y, 1, 1, 0, c, 1);
         if (mouseover) {
-            draw_sprite_ext(self.sprite, 2, x, y, 1, 1, 0, self.class.color, 1);
+            draw_sprite_ext(self.sprite, 2, x, y, 1, 1, 0, c_black, 1);
         }
         draw_set_valign(fa_middle);
         draw_set_halign(fa_center);
@@ -43,9 +44,10 @@ function ElementCard(x, y, element) constructor {
     self.element = element;
     
     self.mouseover = false;
+    self.used = false;
     
     function draw() {
-        self.element.draw(self.x, self.y, self.mouseover);
+        self.element.draw(self.x, self.y, self.mouseover, self.used);
     }
     
     function step(mx, my) {
@@ -55,6 +57,8 @@ function ElementCard(x, y, element) constructor {
         var y2 = y1 + sprite_get_height(self.element.sprite);
         if (point_in_rectangle(mx, my, x1, y1, x2, y2)) {
             self.mouseover = true;
+            if (mouse_check_button_pressed(mb_left)) {
+            }
         } else {
             self.mouseover = false;
         }
