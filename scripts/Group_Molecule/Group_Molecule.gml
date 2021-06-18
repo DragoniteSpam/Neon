@@ -78,6 +78,13 @@ function Molecule() constructor {
         function toString() {
             return self.element.name + " (" + string(self.valence) + "/" + string(self.element.shell_size) + ")";
         }
+        
+        function draw(x, y, seen) {
+            if (seen[$ self.id]) return 0;
+            seen[$ self.id] = true;
+            
+            draw_circle_colour(x, y, 16, c_red, c_red, false);
+        };
     };
     
     function Add(element) {
@@ -107,12 +114,17 @@ function Molecule() constructor {
     }
     
     function RawScore() {
-        if (self.root == 0) return 0;
+        if (!self.root) return 0;
         return self.root.RawScore({ });
     }
     
     function Score() {
         return self.score;
+    }
+    
+    function draw(x, y) {
+        if (!self.root) return;
+        self.root.draw(x, y, { });
     }
     
     self.root = undefined;
