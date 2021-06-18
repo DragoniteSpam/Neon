@@ -38,6 +38,12 @@ sulfur                  = new Element("Sulfur",     "S",    16,     6,      8,  
 chlorine                = new Element("Chlorine",   "Cl",   17,     7,      8,      2.87,       class_halogen);
 argon                   = new Element("Argon",      "Ar",   18,     8,      8,      undefined,  class_noble);
 
+periodic_table = [
+    hydrogen, helium,
+    lithium, beryllium, boron, carbon, nitrogen, oxygen, fluorine, neon,
+    sodium, magnesium, aluminum, silicon, phosphorus, sulfur, chlorine, argon
+];
+
 elements = [
     [
         { element: hydrogen,        weight: 2.5 },
