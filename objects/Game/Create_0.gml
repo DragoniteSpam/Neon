@@ -67,10 +67,11 @@ elements = [
 #endregion
 
 #region game setup
-#macro c_hover      0xbfbfbf
-#macro c_used       0x3f3f3f
-#macro BOARD_SIZE 5
-#macro STARTING_TIME 60
+#macro c_hover                  0xbfbfbf
+#macro c_used                   0x3f3f3f
+#macro BOARD_SIZE               5
+#macro STARTING_TIME            60
+#macro WRONGNESS_PENALTY        0.75
 
 board_start_x = 32;
 board_start_y = 32;
