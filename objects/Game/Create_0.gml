@@ -81,6 +81,7 @@ elements = [
 #macro STARTING_TIME            60
 #macro WRONGNESS_PENALTY        0.75
 #macro CARBON_LIMIT             2                           // organic chemistry makes this really bad, let's not do it
+#macro BASE_ATOM_LIMIT          3
 
 board_start_x = 32;
 board_start_y = 32;
@@ -100,6 +101,8 @@ player = {
     molecule: new Molecule(),
     time: 0,
     running: false,
+    atom_limit: BASE_ATOM_LIMIT,
+    rank: 0,
     
     fill: function() {
         var carbons = 0;
@@ -142,6 +145,7 @@ player = {
         self.fill();
         self.time = STARTING_TIME;
         self.running = true;
+        self.atom_limit = BASE_ATOM_LIMIT + 2 * self.rank;
     },
     
     tick: function() {
@@ -160,6 +164,10 @@ player = {
         for (var i = 0, n = array_length(self.board); i < n; i++) {
             self.board[i].used = false;
         }
+    },
+    
+    AtomsRemaining: function() {
+        return (self.atom_limit - self.molecule.Size());
     },
 };
 #endregion
