@@ -9,6 +9,7 @@
     {"id":{"name":"Game","path":"objects/Game/Game.yy",},"order":17,},
     {"id":{"name":"UI_Root","path":"objects/UI_Root/UI_Root.yy",},"order":27,},
     {"id":{"name":"Group_Database","path":"scripts/Group_Database/Group_Database.yy",},"order":16,},
+    {"id":{"name":"spr_pin","path":"sprites/spr_pin/spr_pin.yy",},"order":28,},
     {"id":{"name":"fnt_neon_medium","path":"fonts/fnt_neon_medium/fnt_neon_medium.yy",},"order":24,},
     {"id":{"name":"spr_card","path":"sprites/spr_card/spr_card.yy",},"order":15,},
     {"id":{"name":"shd_atom","path":"shaders/shd_atom/shd_atom.yy",},"order":22,},

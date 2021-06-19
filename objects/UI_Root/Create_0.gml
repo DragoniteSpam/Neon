@@ -4,3 +4,7 @@
 Update = function() {
     
 };
+
+Render = function() {
+    
+};
