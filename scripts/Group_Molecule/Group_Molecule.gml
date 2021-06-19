@@ -79,7 +79,20 @@ function Molecule() constructor {
             
             return value;
         }
+        
+        function Size(seen) {
+            if (seen[$ self.id]) return 0;
+            seen[$ self.id] = true;
             
+            var value = 1;
+            var keys = variable_struct_get_names(self.bonds);
+            for (var i = 0; i < array_length(keys); i++) {
+                value += Game.player.molecule.get(keys[i]).Size(seen);
+            }
+            
+            return value;
+        }
+        
         function toString() {
             return self.element.name + " (" + string(self.valence) + "/" + string(self.element.shell_size) + ")";
         }
@@ -173,6 +186,11 @@ function Molecule() constructor {
     function RawScore() {
         if (!self.root) return 0;
         return self.root.RawScore({ });
+    }
+    
+    function Size() {
+        if (!self.root) return 0;
+        return self.root.Size({ });
     }
     
     function Score() {
