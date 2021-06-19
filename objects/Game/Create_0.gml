@@ -106,7 +106,7 @@ player = {
     atom_limit: BASE_ATOM_LIMIT,
     rank: 0,
     
-    fill: function() {
+    Fill: function() {
         var carbons = 0;
         for (var i = 0, n = array_length(self.board); i < n; i++) {
             if (self.board[i] && self.board[i].element == Game.carbon) carbons++;
@@ -116,13 +116,13 @@ player = {
             var row = i mod BOARD_SIZE;
             do {
                 if (self.board[i] && self.board[i].element == Game.carbon) carbons--;
-                self.board[i] = new ElementCard(Game.board_start_x + col * Game.board_spacing, Game.board_start_y + row * Game.board_spacing, self.generate(0));
+                self.board[i] = new ElementCard(Game.board_start_x + col * Game.board_spacing, Game.board_start_y + row * Game.board_spacing, self.Generate(0));
                 if (self.board[i].element == Game.carbon) carbons++;
             } until (carbons <= CARBON_LIMIT);
         }
     },
     
-    generate: function(rank) {
+    Generate: function(rank) {
         var max_weight = 0;
         for (var i = 0; i < min(rank + 1, array_length(Game.elements)); i++) {
             for (var j = 0; j < array_length(Game.elements[i]); j++) {
@@ -143,23 +143,46 @@ player = {
         return Game.hydrogen;
     },
     
-    start: function() {
-        self.fill();
+    Start: function() {
+        self.Fill();
         self.time = STARTING_TIME;
         self.running = true;
         self.atom_limit = BASE_ATOM_LIMIT + 2 * self.rank;
     },
     
+    StartTutorial: function() {
+        self.running = true;
+        self.atom_limit = 3;
+        for (var i = 0, n = array_length(self.board); i < n; i++) {
+            var col = i div BOARD_SIZE;
+            var row = i mod BOARD_SIZE;
+            if (i == 12) {
+                self.board[i] = new ElementCard(Game.board_start_x + col * Game.board_spacing, Game.board_start_y + row * Game.board_spacing, self.Generate(0));
+            } else {
+                self.board[i] = undefined;
+            }
+        }
+    },
+    
     tick: function() {
         if (!self.running) return;
         for (var i = 0, n = array_length(self.board); i < n; i++) {
-            self.board[i].step(window_mouse_get_x(), window_mouse_get_y());
+            if (self.board[i]) self.board[i].step(window_mouse_get_x(), window_mouse_get_y());
         }
         self.time -= delta_time / 1000000;
         if (self.time <= 0) {
             self.time = 0;
             self.running = false;
         }
+    },
+    
+    draw: function() {
+        for (var i = 0, n = array_length(self.board); i < n; i++) {
+            if (self.board[i]) {
+                self.board[i].draw();
+            }
+        }
+        self.molecule.draw();
     },
     
     EnableAll: function() {
@@ -174,4 +197,4 @@ player = {
 };
 #endregion
 
-player.start();
+player.StartTutorial();
