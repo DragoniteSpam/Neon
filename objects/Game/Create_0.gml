@@ -82,6 +82,8 @@ elements = [
 #macro WRONGNESS_PENALTY        0.75
 #macro CARBON_LIMIT             2                           // organic chemistry makes this really bad, let's not do it
 #macro BASE_ATOM_LIMIT          3
+#macro SHAKE_DISTANCE           20
+#macro SHAKE_DECAY              0.5
 
 board_start_x = 32;
 board_start_y = 32;

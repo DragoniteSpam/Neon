@@ -168,11 +168,16 @@ function Molecule() constructor {
             array_push(self.log, node);
             return true;
         }
+        if (Game.player.AtomsRemaining() == 0) {
+            self.Shake();
+            return false;
+        }
         if (self.root.Add(node, { })) {
             self.score += element.number;
             array_push(self.log, node);
             return true;
         }
+        self.Shake();
         return false;
     }
     
@@ -203,7 +208,7 @@ function Molecule() constructor {
         gpu_set_ztestenable(true);
         gpu_set_zwriteenable(true);
         gpu_set_cullmode(cull_counterclockwise);
-        self.root.draw(self.x, self.y, { });
+        self.root.draw(self.x + self.shake.x, self.y + self.shake.y, { });
         shader_reset();
         gpu_set_ztestenable(false);
         gpu_set_zwriteenable(false);
@@ -213,6 +218,8 @@ function Molecule() constructor {
         draw_set_valign(fa_middle);
         draw_set_font(fnt_neon_medium);
         self.root.draw(self.x, self.y, { }, true);
+        self.shake.x = choose(-1, 1) * abs(lerp(self.shake.x, 0, SHAKE_DECAY));
+        self.shake.y = choose(-1, 1) * abs(lerp(self.shake.y, 0, SHAKE_DECAY));
     }
     
     function AdjustDrawBounds(x, y) {
@@ -280,6 +287,11 @@ function Molecule() constructor {
         }
     }
     
+    function Shake() {
+        self.shake.x = random_range(-SHAKE_DISTANCE, SHAKE_DISTANCE);
+        self.shake.y = random_range(-SHAKE_DISTANCE, SHAKE_DISTANCE);
+    }
+    
     self.root = undefined;
     self.score = 0;
     self.log = [];
@@ -297,4 +309,5 @@ function Molecule() constructor {
     self.draw_min = { x: 0, y: 0 };
     self.draw_max = { x: 0, y: 0 };
     self.draw_center = { x: 0, y: 0 };
+    self.shake = { x: 0, y: 0 };
 }
