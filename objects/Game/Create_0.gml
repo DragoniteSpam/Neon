@@ -88,7 +88,7 @@ elements = [
 #macro STARTING_TIME            60
 #macro WRONGNESS_PENALTY        0.75
 #macro CARBON_LIMIT             2                           // organic chemistry makes this really bad, let's not do it
-#macro BASE_ATOM_LIMIT          3
+#macro BASE_ATOM_LIMIT          4
 #macro SHAKE_DISTANCE           20
 #macro SHAKE_DECAY              0.5
 #macro UI_LAYER                 layer_get_depth("UI_Game")
@@ -307,11 +307,26 @@ player = {
             { type: TutorialSequenceTypes.ACTION, action: function() {
                 Game.player.board[12].interactive = true;
             }, },
-            { type: TutorialSequenceTypes.CONDITIONAL_PASS, text: "You can use atoms to build molecules. Click on it!", condition: function() { return Game.player.tutorial.flags.first_atom; }, },
+            { type: TutorialSequenceTypes.CONDITIONAL_PASS, text: "You can use atoms to build molecules. Click on it!", condition: function() {
+                return Game.player.tutorial.flags.first_atom;
+            }, },
             { type: TutorialSequenceTypes.TEXT, text: "Now, molecules are made of multiple elements chemically bonded to each other.", },
-            { type: TutorialSequenceTypes.ACTION, action: function() { Game.player.board[7] = new ElementCard(Game.board_start_x + 2 * Game.board_spacing, Game.board_start_y + 1 * Game.board_spacing, Game.hydrogen); }, },
+            { type: TutorialSequenceTypes.ACTION, action: function() {
+                Game.player.board[7] = new ElementCard(Game.board_start_x + 1 * Game.board_spacing, Game.board_start_y + 2 * Game.board_spacing, Game.hydrogen);
+                Game.player.board[7].interactive = false;
+                Game.player.board[7].OnClick = method(Game.player.board[7], function() {
+                    Game.player.tutorial.flags.first_bond = true;
+                });
+            }, },
             { type: TutorialSequenceTypes.TEXT, text: "Here's another element. It can bond with your Nitrogen atom.", },
-            { type: TutorialSequenceTypes.TEXT, text: "Different elements can bond with other elements in different ways.", },
+            { type: TutorialSequenceTypes.ACTION, action: function() {
+                Game.player.board[7].interactive = true;
+            }, },
+            { type: TutorialSequenceTypes.CONDITIONAL_PASS, text: "Click on it to create a chemical bond!", condition: function() {
+                return Game.player.tutorial.flags.first_bond;
+            } },
+            { type: TutorialSequenceTypes.TEXT, text: "Got that? Good!", },
+            { type: TutorialSequenceTypes.TEXT, text: "So, different elements can bond with other elements in different ways.", },
             { type: TutorialSequenceTypes.TEXT, text: "Atomic bonds are powered by the number of valence electrons an element has.", },
             { type: TutorialSequenceTypes.TEXT, text: "When an atom bonds with another atom, they share electrons with one another.", },
             { type: TutorialSequenceTypes.TEXT, text: "(I swear to Dmitri Mendeleev, that is NOT supposed to be an innuendo for anything.)", },
@@ -319,30 +334,39 @@ player = {
             { type: TutorialSequenceTypes.TEXT, text: "The second number is the maximum number of electrons it can acquire through bonding with something.", },
             { type: TutorialSequenceTypes.TEXT, text: "When every atom in a molecule has reached that maximum number of electrons, it's considered a stable molecule.", },
             { type: TutorialSequenceTypes.ACTION, action: function() {
-                Game.player.board[8] = new ElementCard(Game.board_start_x + 3 * Game.board_spacing, Game.board_start_y + 1 * Game.board_spacing, Game.hydrogen);
-                Game.player.board[9] = new ElementCard(Game.board_start_x + 4 * Game.board_spacing, Game.board_start_y + 1 * Game.board_spacing, Game.hydrogen);
+                Game.player.board[8] = new ElementCard(Game.board_start_x + 1 * Game.board_spacing, Game.board_start_y + 3 * Game.board_spacing, Game.hydrogen);
+                Game.player.board[9] = new ElementCard(Game.board_start_x + 1 * Game.board_spacing, Game.board_start_y + 4 * Game.board_spacing, Game.hydrogen);
             }, },
-            { type: TutorialSequenceTypes.CONDITIONAL_PASS, text: "Here's everything else you need to finish a molecule. Have at it!", condition: function() { return Game.player.tutorial.flags.first_molecule; }, },
+            { type: TutorialSequenceTypes.CONDITIONAL_PASS, text: "Here's everything else you need to finish a molecule. Have at it!", condition: function() {
+                return Game.player.molecule.IsComplete();
+            }, },
             { type: TutorialSequenceTypes.TEXT, text: "You did it! You created a complete molecule of Ammonia!", },
             { type: TutorialSequenceTypes.TEXT, text: "There's more to chemistry than that, though.", },
+            { type: TutorialSequenceTypes.ACTION, action: function() {
+                Game.player.molecule.Clear();
+            }, },
             { type: TutorialSequenceTypes.TEXT, text: "A Hydrogen atom and a Nitrogen atom can only share a single electron through an atomic bond.", },
             { type: TutorialSequenceTypes.TEXT, text: "Hydrogen can only share up to one additional electron with another element.", },
             { type: TutorialSequenceTypes.ACTION, action: function() {
-                Game.player.board[18] = new ElementCard(Game.board_start_x + 3 * Game.board_spacing, Game.board_start_y + 3 * Game.board_spacing, Game.oxygen);
-                Game.player.board[19] = new ElementCard(Game.board_start_x + 4 * Game.board_spacing, Game.board_start_y + 3 * Game.board_spacing, Game.oxygen);
+                Game.player.board[19] = new ElementCard(Game.board_start_x + 3 * Game.board_spacing, Game.board_start_y + 4 * Game.board_spacing, Game.oxygen);
+                Game.player.board[24] = new ElementCard(Game.board_start_x + 4 * Game.board_spacing, Game.board_start_y + 4 * Game.board_spacing, Game.oxygen);
             }, },
-            { type: TutorialSequenceTypes.CONDITIONAL_PASS, text: "Here are two Oxygen atoms.", condition: function() { return Game.player.tutorial.flags.first_multi_bond; }, },
+            { type: TutorialSequenceTypes.TEXT, text: "Here are two Oxygen atoms. By the way, if you ever want to reset the molecule, you can click the \"Reset\" button in the corner.", },
+            { type: TutorialSequenceTypes.CONDITIONAL_PASS, text: "", condition: function() {
+                return Game.player.molecule.IsComplete();
+            }, },
             { type: TutorialSequenceTypes.TEXT, text: "Oxygen, as you can see, requires two more electrons to be shared until it reaches its limit.", },
             { type: TutorialSequenceTypes.TEXT, text: "And since oxygen atoms have more than two valence electrons available, it can share both of them!", },
             { type: TutorialSequenceTypes.TEXT, text: "This creates a double bond with the other atom.", },
             { type: TutorialSequenceTypes.TEXT, text: "Atomic bonds can form either single, double, or triple bonds with each other.", },
-            { type: TutorialSequenceTypes.TEXT, text: "If two atoms in a molecule are capable of forming multiple bonds, you get to choose which type you want!", },
-            
-            ///
+            { type: TutorialSequenceTypes.TEXT, text: "If two atoms in a molecule are capable of forming multiple bonds, you get to choose which type you want.", },
+            { type: TutorialSequenceTypes.TEXT, text: "This adds a bit of variety to the types of molecules you're able to create.", },
             { type: TutorialSequenceTypes.TEXT, text: "Now that we've covered the basics, let's talk about how to play the game.", },
             { type: TutorialSequenceTypes.TEXT, text: "Your score is dependent on the combined atomic numbers of all of the elements in your molecule.", },
             { type: TutorialSequenceTypes.TEXT, text: "The atomic number is what you see at the bottom of every card.", },
-            
+            { type: TutorialSequenceTypes.TEXT, text: "The atomic number is what your score is based on in this game.", },
+            { type: TutorialSequenceTypes.TEXT, text: "Creating bigger molecules out of heavier elements will give you a higher score!", },
+            { type: TutorialSequenceTypes.TEXT, text: "One last thing.", },
             ///
             { type: TutorialSequenceTypes.TEXT, text: "There's much more to chemistry than this, of course.", },
             { type: TutorialSequenceTypes.TEXT, text: "You'll find distinctions between ionic, covalent, and polar covalent bonds, and heavier elements being able to bond with more elements...", },
@@ -358,8 +382,7 @@ player = {
         conditional_function: undefined,
         flags: {
             first_atom: false,
-            first_molecule: false,
-            first_multi_bond: false,
+            first_bond: false,
         },
         
         tick: function() {
@@ -397,7 +420,9 @@ player = {
                     }], Game.ui_tutorial);
                     break;
                 case TutorialSequenceTypes.CONDITIONAL_PASS:
-                    ui_create_message(data.text, [], Game.ui_tutorial).shade = false;
+                    if (data.text != "") {
+                        ui_create_message(data.text, [], Game.ui_tutorial).shade = false;
+                    }
                     self.conditional_function = data.condition;
                     break;
                 case TutorialSequenceTypes.CHOICES:
