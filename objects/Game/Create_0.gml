@@ -379,6 +379,20 @@ player = {
                         },
                     }]);
                     break;
+                case TutorialSequenceTypes.CHOICES:
+                    var choices = [];
+                    for (var i = 0, n = array_length(data.choices); i < n; i++) {
+                        array_push(choices, {
+                            message: data.choices[i],
+                            click: function() {
+                                Game.player.tutorial.choice = self.index;
+                                ui_clear_dynamic_messages();
+                                Game.player.tutorial.Next();
+                            },
+                        });
+                    }
+                    ui_create_message(data.text, choices);
+                    break;
                 case TutorialSequenceTypes.WAIT:
                     self.wait_time = data.duration;
                     break;
