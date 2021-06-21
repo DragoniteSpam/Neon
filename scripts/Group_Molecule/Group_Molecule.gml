@@ -8,7 +8,7 @@ function Molecule() constructor {
         
         Game.player.molecule.set(self);
         
-        function Add(node, seen) {
+        function Add(node, seen, bonds) {
             if (seen[$ self.id]) return;
             seen[$ self.id] = true;
             
@@ -23,34 +23,55 @@ function Molecule() constructor {
                 var diff = node.element.electro - self.element.electro;
                 if (abs(diff) < 1.7) {      // covalent
                     var shared = min(node.element.shell_size - node.valence, self.element.shell_size - self.valence, 3);
-                    self.valence += shared;
-                    node.valence += shared;
-                    repeat (shared) {
-                        self.Bond(node);
+                    if (shared == 1) bonds = 1;
+                    if (bonds != undefined) {
+                        shared = min(shared, bonds);
+                        self.valence += shared;
+                        node.valence += shared;
+                        repeat (shared) {
+                            self.Bond(node);
+                        }
+                        show_debug_message("Bonded " + string(self) + " to " + string(node) + " (covalent)");
+                    } else {
+                        ui_create_message("How many bonds would you like to create?", [
+                        ]);
                     }
-                    show_debug_message("Bonded " + string(self) + " to " + string(node) + " (covalent)");
                 } else {                    // ionic
                     var donated;
                     if (self.element.electro < node.element.electro) {
                         donated = min(node.element.shell_size - node.valence, self.valence, 3);
-                        self.valence -= donated;
-                        node.valence += donated;
+                        if (donated = 1) bonds = 1;
+                        if (bonds != undefined) {
+                            donated = min(bonds, donated);
+                            self.valence -= donated;
+                            node.valence += donated;
+                        }
                     } else {
                         donated = min(self.element.shell_size - self.valence, node.valence, 3);
-                        self.valence += donated;
-                        node.valence -= donated;
+                        if (donated = 1) bonds = 1;
+                        if (bonds != undefined) {
+                            donated = min(bonds, donated);
+                            self.valence += donated;
+                            node.valence -= donated;
+                        }
                     }
-                    repeat (donated) {
-                        self.Bond(node);
+                    if (bonds != undefined) {
+                        donated = min(bonds, donated);
+                        repeat (donated) {
+                            self.Bond(node);
+                        }
+                        show_debug_message("Bonded " + string(self) + " to " + string(node) + " (ionic)");
+                    } else {
+                        ui_create_message("How many bonds would you like to create?", [
+                        ]);
                     }
-                    show_debug_message("Bonded " + string(self) + " to " + string(node) + " (ionic)");
                 }
                 return true;
             }
             
             var keys = variable_struct_get_names(self.bonds);
             for (var i = 0; i < array_length(keys); i++) {
-                if (Game.player.molecule.get(keys[i]).Add(node, seen)) return true;
+                if (Game.player.molecule.get(keys[i]).Add(node, seen, bonds)) return true;
             }
             
             return false;
@@ -172,7 +193,7 @@ function Molecule() constructor {
             self.Shake();
             return false;
         }
-        if (self.root.Add(node, { })) {
+        if (self.root.Add(node, { }, undefined)) {
             self.score += element.number;
             array_push(self.log, node);
             if (self.IsComplete()) {
