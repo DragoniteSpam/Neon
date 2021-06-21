@@ -25,3 +25,10 @@ function ui_create_message(message, buttons) {
         ds_list_add(Game.ui_dynamic, button);
     }
 }
+
+function ui_clear_dynamic_messages() {
+    for (var i = 0, n = ds_list_size(Game.ui_dynamic); i < n; i++) {
+        instance_destroy(Game.ui_dynamic[| i]);
+    }
+    ds_list_clear(Game.ui_dynamic);
+}

@@ -260,10 +260,7 @@ function Molecule() constructor {
                     {
                         message: "Continue",
                         click: function() {
-                            for (var i = 0, n = ds_list_size(Game.ui_dynamic); i < n; i++) {
-                                instance_destroy(Game.ui_dynamic[| i]);
-                            }
-                            ds_list_clear(Game.ui_dynamic);
+                            ui_clear_dynamic_messages();
                             Game.player.molecule.Clear();
                         }
                     },
