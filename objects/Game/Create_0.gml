@@ -178,6 +178,7 @@ player = {
     atom_limit: BASE_ATOM_LIMIT,
     rank: 0,
     score: 0,
+    molecules: 0,
     
     Fill: function() {
         var carbons = 0;
@@ -381,6 +382,8 @@ player = {
             { type: TutorialSequenceTypes.TEXT, text: "The atomic number is what you see at the bottom of every card.", },
             { type: TutorialSequenceTypes.TEXT, text: "The atomic number is what your score is based on in this game.", },
             { type: TutorialSequenceTypes.TEXT, text: "Creating bigger molecules out of heavier elements will give you a higher score!", },
+            { type: TutorialSequenceTypes.TEXT, text: "You get " + string(STARTING_TIME) + " seconds to rack up as much score as you can.", },
+            { type: TutorialSequenceTypes.TEXT, text: "Completing molecules gives you a small time bonus, and also allows you to create bigger molecules.", },
             { type: TutorialSequenceTypes.TEXT, text: "One last thing.", },
             ///
             { type: TutorialSequenceTypes.TEXT, text: "There's much more to chemistry than this, of course.", },
