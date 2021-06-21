@@ -78,7 +78,7 @@ elements = [
 #macro c_hover                  0xbfbfbf
 #macro c_used                   0x3f3f3f
 #macro BOARD_SIZE               5
-#macro STARTING_TIME            60
+#macro STARTING_TIME            10
 #macro WRONGNESS_PENALTY        0.75
 #macro CARBON_LIMIT             2                           // organic chemistry makes this really bad, let's not do it
 #macro BASE_ATOM_LIMIT          3
@@ -98,8 +98,18 @@ try {
     save_data.exists = true;
     save_data.high_scores = json.high_scores;
     buffer_delete(buffer);
+    if (!is_array(save_data.high_scores)) {
+        throw "bad high score table";
+    }
+    for (var i = 0, n = array_length(save_data.high_scores); i < n; i++) {
+        if (!is_numeric(save_data.high_scores[i])) throw "bad high score value(s)";
+    }
 } catch (e) {
-    show_debug_message("no save data found, let's create some instead");
+    show_debug_message("no valid save data found, let's create some instead");
+    self.save_data = {
+        exists: false,
+        high_scores: [ ],
+    };
 }
 
 save = function() {
@@ -110,8 +120,34 @@ save = function() {
 };
 
 AddHighScore = function(value) {
-    array_push(self.high_scores, value);
-    array_sort(self.high_scores, true);
+    array_push(self.save_data.high_scores, value);
+    array_sort(self.save_data.high_scores, false);
+};
+
+GameOver = function() {
+    ui_clear_dynamic_messages();
+    self.player.running = false;
+    if (array_length(self.save_data.high_scores) > 0) {
+        var is_high_score = (self.player.score > self.save_data.high_scores[0]);
+        ui_create_message("Time's up!\nNew high score: " + string(self.player.score), [
+            {
+                message: "Cool!",
+                click: function() {
+                },
+            },
+        ]);
+    } else {
+        var is_high_score = (self.player.score > self.save_data.high_scores[0]);
+        ui_create_message("Time's up!", [
+            {
+                message: "Return!",
+                click: function() {
+                },
+            },
+        ]);
+    }
+    Game.AddHighScore(self.player.score);
+    // Game.save();
 };
 
 board_start_x = 32;
@@ -203,8 +239,7 @@ player = {
         if (self.time <= 0) {
             self.time = 0;
             self.running = false;
-            Game.AddHighScore(self.score);
-            // Game.save();
+            Game.GameOver();
         }
     },
     
