@@ -84,7 +84,7 @@ elements = [
 #macro BASE_ATOM_LIMIT          3
 #macro SHAKE_DISTANCE           20
 #macro SHAKE_DECAY              0.5
-#macro UI_LAYER                 "UI_Game"
+#macro UI_LAYER                 layer_get_depth("UI_Game")
 
 board_start_x = 32;
 board_start_y = 32;

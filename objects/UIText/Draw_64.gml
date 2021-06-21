@@ -2,6 +2,8 @@
 
 if (!self.enabled) return;
 
+self.draw_shade();
+
 self.image_speed = 0;
 var x1 = x;
 var y1 = y;
