@@ -38,7 +38,8 @@ function Molecule() constructor {
                             {
                                 message: "Single",
                                 click: function() {
-                                    
+                                    Game.player.molecule.Add(undefined, 1);
+                                    ui_clear_dynamic_messages();
                                 },
                             },
                         ];
@@ -46,7 +47,8 @@ function Molecule() constructor {
                             array_push(responses,  {
                                 message: "Double",
                                 click: function() {
-                                    
+                                    Game.player.molecule.Add(undefined, 2);
+                                    ui_clear_dynamic_messages();
                                 },
                             });
                         }
@@ -54,7 +56,8 @@ function Molecule() constructor {
                             array_push(responses,  {
                                 message: "Triple",
                                 click: function() {
-                                    
+                                    Game.player.molecule.Add(undefined, 3);
+                                    ui_clear_dynamic_messages();
                                 },
                             });
                         }
@@ -92,7 +95,8 @@ function Molecule() constructor {
                             {
                                 message: "Single",
                                 click: function() {
-                                    
+                                    Game.player.molecule.Add(undefined, 1);
+                                    ui_clear_dynamic_messages();
                                 },
                             },
                         ];
@@ -100,7 +104,8 @@ function Molecule() constructor {
                             array_push(responses,  {
                                 message: "Double",
                                 click: function() {
-                                    
+                                    Game.player.molecule.Add(undefined, 2);
+                                    ui_clear_dynamic_messages();
                                 },
                             });
                         }
@@ -108,7 +113,8 @@ function Molecule() constructor {
                             array_push(responses,  {
                                 message: "Triple",
                                 click: function() {
-                                    
+                                    Game.player.molecule.Add(undefined, 3);
+                                    ui_clear_dynamic_messages();
                                 },
                             });
                         }
