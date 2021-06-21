@@ -9,14 +9,14 @@ function Molecule() constructor {
         Game.player.molecule.set(self);
         
         function Add(node, seen, bonds) {
-            if (seen[$ self.id]) return;
+            if (seen[$ self.id]) return BondStatusCodes.INVALID;
             seen[$ self.id] = true;
             
             // i don't know if this is an actual rule but i've never seen atoms
             // that both have an electronegativity lower than Hydrogen bond so
             // we'll just go with it for now
             if (self.element.electro < 2.3 && node.element.electro < 2.3) {
-                return false;
+                return BondStatusCodes.INVALID;
             }
             
             if (!self.Complete()) {
@@ -32,6 +32,7 @@ function Molecule() constructor {
                             self.Bond(node);
                         }
                         show_debug_message("Bonded " + string(self) + " to " + string(node) + " (covalent)");
+                        return BondStatusCodes.SUCCESS;
                     } else {
                         #region ask
                         var responses = [
@@ -62,6 +63,7 @@ function Molecule() constructor {
                             });
                         }
                         ui_create_message("How many bonds would you like to create?", responses);
+                        return BondStatusCodes.DEFERRED;
                         #endregion
                     }
                 } else {                    // ionic
@@ -89,6 +91,7 @@ function Molecule() constructor {
                             self.Bond(node);
                         }
                         show_debug_message("Bonded " + string(self) + " to " + string(node) + " (ionic)");
+                        return BondStatusCodes.SUCCESS;
                     } else {
                         #region ask
                         var responses = [
@@ -119,18 +122,19 @@ function Molecule() constructor {
                             });
                         }
                         ui_create_message("How many bonds would you like to create?", responses);
+                        return BondStatusCodes.DEFERRED;
                         #endregion
                     }
                 }
-                return true;
+                return BondStatusCodes.SUCCESS;
             }
             
             var keys = variable_struct_get_names(self.bonds);
             for (var i = 0; i < array_length(keys); i++) {
-                if (Game.player.molecule.get(keys[i]).Add(node, seen, bonds)) return true;
+                if (Game.player.molecule.get(keys[i]).Add(node, seen, bonds) == BondStatusCodes.SUCCESS) return BondStatusCodes.SUCCESS;
             }
             
-            return false;
+            return BondStatusCodes.INVALID;
         }
         
         function Bond(node) {
@@ -257,24 +261,30 @@ function Molecule() constructor {
             self.Shake();
             return false;
         }
-        if (self.root.Add(node, { }, bonds)) {
-            self.score += element.number;
-            array_push(self.log, node);
-            if (self.IsComplete()) {
-                Game.player.score += self.score;
-                ui_create_message("Completed a molecule!\nScore: " + string(self.score), [
-                    {
-                        message: "Continue",
-                        click: function() {
-                            ui_clear_dynamic_messages();
-                            Game.player.molecule.Clear();
-                        }
-                    },
-                ]);
-            }
-            return true;
+        var addition = self.root.Add(node, { }, bonds);
+        switch (addition) {
+            case BondStatusCodes.SUCCESS:
+                self.score += element.number;
+                array_push(self.log, node);
+                if (self.IsComplete()) {
+                    Game.player.score += self.score;
+                    ui_create_message("Completed a molecule!\nScore: " + string(self.score), [
+                        {
+                            message: "Continue",
+                            click: function() {
+                                ui_clear_dynamic_messages();
+                                Game.player.molecule.Clear();
+                            }
+                        },
+                    ]);
+                }
+                return true;
+            case BondStatusCodes.DEFERRED:
+                return false;
+            case BondStatusCodes.INVALID:
+                self.Shake();
+                return false;
         }
-        self.Shake();
         return false;
     }
     
@@ -408,4 +418,10 @@ function Molecule() constructor {
     self.draw_max = { x: 0, y: 0 };
     self.draw_center = { x: 0, y: 0 };
     self.shake = { x: 0, y: 0 };
+}
+
+enum BondStatusCodes {
+    INVALID     = 0,
+    DEFERRED    = 1,
+    SUCCESS     = 2,
 }
