@@ -63,13 +63,11 @@ elements = [
         { element: carbon,          weight: 1.0 },
         { element: nitrogen,        weight: 1.5 },
         { element: oxygen,          weight: 2.5 },
-    ],
-    [
         { element: fluorine,        weight: 1.0 },
         { element: neon,            weight: 0.5 },
-        { element: sodium,          weight: 0.8 },
     ],
     [
+        { element: sodium,          weight: 0.8 },
         { element: magnesium,       weight: 0.7 },
         { element: aluminum,        weight: 0.5 },
         { element: silicon,         weight: 0.0 },
@@ -385,8 +383,21 @@ player = {
             { type: TutorialSequenceTypes.TEXT, text: "You get " + string(STARTING_TIME) + " seconds to rack up as much score as you can.", },
             { type: TutorialSequenceTypes.TEXT, text: "Completing molecules gives you a small time bonus, and also allows you to create bigger molecules.", },
             { type: TutorialSequenceTypes.TEXT, text: "One last thing.", },
-            ///
-            { type: TutorialSequenceTypes.TEXT, text: "There's much more to chemistry than this, of course.", },
+            { type: TutorialSequenceTypes.ACTION, action: function() {
+                Game.player.molecule.Clear();
+                Game.player.board[19].special_disable = true;
+                Game.player.board[24].special_disable = true;
+                Game.player.board[0] = new ElementCard(Game.board_start_x + 0 * Game.board_spacing, Game.board_start_y + 0 * Game.board_spacing, Game.fluorine);
+                Game.player.board[5] = new ElementCard(Game.board_start_x + 1 * Game.board_spacing, Game.board_start_y + 0 * Game.board_spacing, Game.helium);
+                Game.player.board[10] = new ElementCard(Game.board_start_x + 2 * Game.board_spacing, Game.board_start_y + 0 * Game.board_spacing, Game.fluorine);
+                inst_score.enabled = true;
+            }, },
+            { type: TutorialSequenceTypes.TEXT, text: "There are a few elements that... can't really bond with anything.", },
+            { type: TutorialSequenceTypes.TEXT, text: "Noble gasses, such as Helium and Neon, already have a full outer shell of valence electrons and therefore can't share any with others.", },
+            { type: TutorialSequenceTypes.TEXT, text: "But these elements still have their uses.", },
+            { type: TutorialSequenceTypes.TEXT, text: "Instead of becoming part of your molecule, noble gasses will isntead confer you a multipler to your current molecule's score", },
+            { type: TutorialSequenceTypes.TEXT, text: "These can be pretty handy for racking up high scores.", },
+            { type: TutorialSequenceTypes.TEXT, text: "Now, there's much more to chemistry than this, of course.", },
             { type: TutorialSequenceTypes.TEXT, text: "You'll find distinctions between ionic, covalent, and polar covalent bonds, and heavier elements being able to bond with more elements...", },
             { type: TutorialSequenceTypes.TEXT, text: "...but this game was made in the span of just a few days, so for now we'll just be playing with small, light elements.", },
             { type: TutorialSequenceTypes.TEXT, text: "In some cases you'll find that the world geometry of molecules looks a little different from what you see on the right in the real world...", },
