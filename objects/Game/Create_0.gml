@@ -263,6 +263,8 @@ player = {
 };
 #endregion
 
+ui_dynamic = ds_list_create();
+
 player.Start();
 
 enum TutorialSequenceTypes {
