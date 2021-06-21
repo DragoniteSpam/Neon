@@ -269,9 +269,9 @@ function Molecule() constructor {
                 if (self.IsComplete()) {
                     if (!Game.player.tutorial.running) {
                         Game.player.score += self.score;
-                        Game.player.time += 3;
                         if (++Game.player.molecules % 5 == 0) {
                             Game.player.atom_limit++;
+                            Game.player.time += 5;
                         }
                         ui_create_message("Completed a molecule!\nScore: " + string(self.score), [
                             {

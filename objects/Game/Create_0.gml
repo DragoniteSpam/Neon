@@ -83,7 +83,7 @@ elements = [
 #macro c_hover                  0xbfbfbf
 #macro c_used                   0x3f3f3f
 #macro BOARD_SIZE               5
-#macro STARTING_TIME            60
+#macro STARTING_TIME            5
 #macro WRONGNESS_PENALTY        0.75
 #macro CARBON_LIMIT             2                           // organic chemistry makes this really bad, let's not do it
 #macro BASE_ATOM_LIMIT          4
@@ -138,6 +138,8 @@ GameOver = function() {
             {
                 message: "Cool!",
                 click: function() {
+                    ui_clear_dynamic_messages();
+                    Game.player.Start();
                 },
             },
         ]);
@@ -147,6 +149,8 @@ GameOver = function() {
             {
                 message: "Return!",
                 click: function() {
+                    ui_clear_dynamic_messages();
+                    Game.player.Start();
                 },
             },
         ]);
