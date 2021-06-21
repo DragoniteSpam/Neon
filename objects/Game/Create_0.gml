@@ -233,6 +233,7 @@ player = {
         } else {
             self.EraseBoard();
             self.time = 1000000000;
+            self.tutorial.Next();
         }
     },
     
@@ -252,6 +253,7 @@ player = {
     
     tick: function() {
         if (!self.running) return;
+        if (self.tutorial.running) self.tutorial.tick();
         for (var i = 0, n = array_length(self.board); i < n; i++) {
             if (self.board[i]) self.board[i].step(window_mouse_get_x(), window_mouse_get_y());
         }
@@ -283,7 +285,10 @@ player = {
     },
     
     tutorial: {
+        running: false,
+        
         sequence: [
+            { type: TutorialSequenceTypes.WAIT, duration: 1, },
             { type: TutorialSequenceTypes.TEXT, text: "Hey there!", },
             { type: TutorialSequenceTypes.TEXT, text: "My name is Adam!", },
             { type: TutorialSequenceTypes.CHOICES, text: "You remember chemistry, right?", choices: ["Yeah!", "Nope!", "Oh no..."], },
@@ -339,11 +344,45 @@ player = {
         ],
         
         choice: 0,
-        index: 1,
+        index: -1,
+        wait_time: -1,
         flags: {
             first_atom: false,
             first_molecule: false,
             first_multi_bond: false,
+        },
+        
+        tick: function() {
+            if (self.wait_time > 0) {
+                self.wait_time -= (delta_time / 1000000);
+                if (self.wait_time <= 0) {
+                    self.Next();
+                }
+                return;
+            }
+        },
+        
+        Next: function() {
+            self.running = true;
+            if (++self.index >= array_length(self.sequence)) {
+                self.running = false;
+                return;
+            }
+            var data = self.sequence[self.index];
+            switch (data.type) {
+                case TutorialSequenceTypes.TEXT:
+                    ui_create_message(data.text, [{
+                        message: "Next",
+                        click: function() {
+                            ui_clear_dynamic_messages();
+                            Game.player.tutorial.Next();
+                        },
+                    }]);
+                    break;
+                case TutorialSequenceTypes.WAIT:
+                    self.wait_time = data.duration;
+                    break;
+            }
         },
     },
 };
@@ -359,5 +398,5 @@ blocked = function() {
 active = false;
 
 enum TutorialSequenceTypes {
-    TEXT, CHOICES, CHOICE_BRANCH, CONDITIONAL_PASS, ACTION,
+    TEXT, CHOICES, CHOICE_BRANCH, CONDITIONAL_PASS, ACTION, WAIT,
 }
