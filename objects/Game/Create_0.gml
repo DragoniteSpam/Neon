@@ -264,6 +264,7 @@ player = {
 #endregion
 
 ui_dynamic = ds_list_create();
+ui_tutorial = ds_list_create();
 
 player.Start();
 
