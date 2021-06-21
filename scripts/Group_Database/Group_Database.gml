@@ -52,6 +52,10 @@ function ElementCard(x, y, element) constructor {
     
     self.mouseover = false;
     self.used = false;
+    self.interactive = true;
+    
+    self.OnClick = function() {
+    }
     
     function draw() {
         self.element.draw(self.x, self.y, self.mouseover, self.used);
@@ -62,9 +66,10 @@ function ElementCard(x, y, element) constructor {
         var y1 = self.y;
         var x2 = x1 + sprite_get_width(self.element.sprite);
         var y2 = y1 + sprite_get_height(self.element.sprite);
-        if (self.element.valid && !Game.blocked() && point_in_rectangle(mx, my, x1, y1, x2, y2)) {
+        if (self.interactive && self.element.valid && !Game.blocked() && point_in_rectangle(mx, my, x1, y1, x2, y2)) {
             self.mouseover = true;
             if (mouse_check_button_pressed(mb_left)) {
+                self.OnClick();
                 if (Game.player.molecule.Add(self.element)) {
                     self.used = true;
                 } else {
