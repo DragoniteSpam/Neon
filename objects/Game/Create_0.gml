@@ -105,6 +105,7 @@ player = {
     running: false,
     atom_limit: BASE_ATOM_LIMIT,
     rank: 0,
+    score: 0,
     
     Fill: function() {
         var carbons = 0;
