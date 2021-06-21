@@ -109,6 +109,11 @@ save = function() {
     buffer_delete(buffer);
 };
 
+AddHighScore = function(value) {
+    array_push(self.high_scores, value);
+    array_sort(self.high_scores, true);
+};
+
 board_start_x = 32;
 board_start_y = 32;
 board_spacing = 130;
@@ -198,6 +203,8 @@ player = {
         if (self.time <= 0) {
             self.time = 0;
             self.running = false;
+            Game.AddHighScore(self.score);
+            // Game.save();
         }
     },
     
