@@ -267,16 +267,18 @@ function Molecule() constructor {
                 self.score += element.number;
                 array_push(self.log, node);
                 if (self.IsComplete()) {
-                    Game.player.score += self.score;
-                    ui_create_message("Completed a molecule!\nScore: " + string(self.score), [
-                        {
-                            message: "Continue",
-                            click: function() {
-                                ui_clear_dynamic_messages();
-                                Game.player.molecule.Clear();
-                            }
-                        },
-                    ]);
+                    if (!Game.player.tutorial.running) {
+                        Game.player.score += self.score;
+                        ui_create_message("Completed a molecule!\nScore: " + string(self.score), [
+                            {
+                                message: "Continue",
+                                click: function() {
+                                    ui_clear_dynamic_messages();
+                                    Game.player.molecule.Clear();
+                                }
+                            },
+                        ]);
+                    }
                 }
                 return true;
             case BondStatusCodes.DEFERRED:
