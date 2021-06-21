@@ -175,6 +175,26 @@ function Molecule() constructor {
         if (self.root.Add(node, { })) {
             self.score += element.number;
             array_push(self.log, node);
+            if (self.IsComplete()) {
+                var background = instance_create_layer(room_width / 2, room_height / 2, UI_LAYER, UIText);
+                background.text = "Completed a molecule!\nScore: " + string(self.score);
+                background.image_xscale = 2;
+                background.x -= background.sprite_width / 2;
+                background.y -= background.sprite_height / 2;
+                ds_list_add(Game.ui_dynamic, background);
+                
+                var button = instance_create_layer(room_width / 2, background.y + background.sprite_height + 32, UI_LAYER, UIButton);
+                button.x -= button.sprite_width / 2;
+                button.image_yscale = 0.5;
+                button.text = "Continue";
+                button.OnClick = function() {
+                    for (var i = 0, n = ds_list_size(Game.ui_dynamic); i < n; i++) {
+                        instance_destroy(Game.ui_dynamic[| i]);
+                    }
+                    ds_list_clear(Game.ui_dynamic);
+                };
+                ds_list_add(Game.ui_dynamic, button);
+            }
             return true;
         }
         self.Shake();
