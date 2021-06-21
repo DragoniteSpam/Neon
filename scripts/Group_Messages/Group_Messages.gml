@@ -1,11 +1,11 @@
-function ui_create_message(message, buttons) {
+function ui_create_message(message, buttons, list = Game.ui_dynamic) {
     var background = instance_create_depth(room_width / 2, room_height / 2, UI_LAYER - 100, UIText);
     background.text = message;
-    background.image_xscale = 2;
+    background.image_xscale = 3;
     background.x -= background.sprite_width / 2;
     background.y -= background.sprite_height / 2;
     background.shade = true;
-    ds_list_add(Game.ui_dynamic, background);
+    ds_list_add(list, background);
     
     var n = array_length(buttons);
     var off = 0;
@@ -23,8 +23,10 @@ function ui_create_message(message, buttons) {
         button.OnClick = method(button, buttons[i].click);
         button.elevated_interaction = true;
         button.index = i;
-        ds_list_add(Game.ui_dynamic, button);
+        ds_list_add(list, button);
     }
+    
+    return background;
 }
 
 function ui_clear_dynamic_messages() {
