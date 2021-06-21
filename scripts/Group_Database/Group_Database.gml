@@ -70,7 +70,7 @@ function ElementCard(x, y, element) constructor {
             self.mouseover = true;
             if (mouse_check_button_pressed(mb_left)) {
                 self.OnClick();
-                if (Game.player.molecule.Add(self.element)) {
+                if (Game.player.molecule.Add(self.element) != BondStatusCodes.INVALID) {
                     self.used = true;
                 } else {
                     Game.player.time *= WRONGNESS_PENALTY;

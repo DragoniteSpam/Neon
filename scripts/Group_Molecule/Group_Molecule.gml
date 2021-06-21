@@ -249,17 +249,17 @@ function Molecule() constructor {
         if (element.electro == undefined) {
             self.score *= element.number;
             array_push(self.log, node);
-            return true;
+            return BondStatusCodes.SUCCESS;
         }
         if (!self.root) {
             self.root = node;
             self.score = element.number;
             array_push(self.log, node);
-            return true;
+            return BondStatusCodes.SUCCESS;
         }
         if (Game.player.AtomsRemaining() == 0) {
             self.Shake();
-            return false;
+            return BondStatusCodes.INVALID;
         }
         var addition = self.root.Add(node, { }, bonds);
         switch (addition) {
@@ -280,14 +280,14 @@ function Molecule() constructor {
                         ]);
                     }
                 }
-                return true;
+                return BondStatusCodes.SUCCESS;
             case BondStatusCodes.DEFERRED:
-                return false;
+                return BondStatusCodes.DEFERRED;
             case BondStatusCodes.INVALID:
                 self.Shake();
-                return false;
+                return BondStatusCodes.INVALID;
         }
-        return false;
+        return BondStatusCodes.INVALID;
     }
     
     function IsComplete() {
