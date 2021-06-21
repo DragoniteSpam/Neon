@@ -177,28 +177,18 @@ function Molecule() constructor {
             array_push(self.log, node);
             if (self.IsComplete()) {
                 Game.player.score += self.score;
-                
-                var background = instance_create_depth(room_width / 2, room_height / 2, UI_LAYER - 100, UIText);
-                background.text = "Completed a molecule!\nScore: " + string(self.score);
-                background.image_xscale = 2;
-                background.x -= background.sprite_width / 2;
-                background.y -= background.sprite_height / 2;
-                background.shade = true;
-                ds_list_add(Game.ui_dynamic, background);
-                
-                var button = instance_create_depth(room_width / 2, background.y + background.sprite_height + 32, UI_LAYER - 200, UIButton);
-                button.x -= button.sprite_width / 2;
-                button.image_yscale = 0.5;
-                button.text = "Continue";
-                button.elevated_interaction = true;
-                button.OnClick = function() {
-                    for (var i = 0, n = ds_list_size(Game.ui_dynamic); i < n; i++) {
-                        instance_destroy(Game.ui_dynamic[| i]);
-                    }
-                    ds_list_clear(Game.ui_dynamic);
-                    Game.player.molecule.Clear();
-                };
-                ds_list_add(Game.ui_dynamic, button);
+                ui_create_message("Completed a molecule!\nScore: " + string(self.score), [
+                    {
+                        message: "Continue",
+                        click: function() {
+                            for (var i = 0, n = ds_list_size(Game.ui_dynamic); i < n; i++) {
+                                instance_destroy(Game.ui_dynamic[| i]);
+                            }
+                            ds_list_clear(Game.ui_dynamic);
+                            Game.player.molecule.Clear();
+                        }
+                    },
+                ]);
             }
             return true;
         }
