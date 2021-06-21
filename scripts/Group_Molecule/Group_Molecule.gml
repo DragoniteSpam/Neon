@@ -176,6 +176,7 @@ function Molecule() constructor {
             self.score += element.number;
             array_push(self.log, node);
             if (self.IsComplete()) {
+                Game.player.score += self.score;
                 var background = instance_create_layer(room_width / 2, room_height / 2, UI_LAYER, UIText);
                 background.text = "Completed a molecule!\nScore: " + string(self.score);
                 background.image_xscale = 2;
