@@ -290,6 +290,10 @@ player = {
         return (self.atom_limit - self.molecule.Size());
     },
     
+    ResetAfterRound: function() {
+        if (self.tutorial.running) return;
+    },
+    
     tutorial: {
         running: false,
         

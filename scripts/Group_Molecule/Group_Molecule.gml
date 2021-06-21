@@ -234,7 +234,7 @@ function Molecule() constructor {
         self.draw_max = { x: 0, y: 0 };
         self.draw_center = { x: 0, y: 0 };
         
-        Game.player.EnableAll();
+        Game.player.ResetAfterRound();
     }
     
     function Add(element, bonds = undefined) {
