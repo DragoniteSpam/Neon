@@ -282,7 +282,7 @@ player = {
     
     EnableAll: function() {
         for (var i = 0, n = array_length(self.board); i < n; i++) {
-            self.board[i].used = false;
+            if (!self.board[i].special_disable) self.board[i].used = false;
         }
     },
     
@@ -309,6 +309,7 @@ player = {
                     Game.player.tutorial.flags.first_atom = true;
                 });
                 Game.player.board[12].interactive = false;
+                Game.player.board[12].special_disable = true;
             }, },
             { type: TutorialSequenceTypes.TEXT, text: "Anyway, you see this here? That's a atom of the element Nitrogen.", },
             { type: TutorialSequenceTypes.TEXT, text: "Elements are the basis of allmost everything in the Universe!" },
@@ -327,6 +328,7 @@ player = {
                 Game.player.board[7].OnClick = method(Game.player.board[7], function() {
                     Game.player.tutorial.flags.first_bond = true;
                 });
+                Game.player.board[7].special_disable = true;
             }, },
             { type: TutorialSequenceTypes.TEXT, text: "Here's another element. It can bond with your Nitrogen atom.", },
             { type: TutorialSequenceTypes.ACTION, action: function() {
@@ -346,6 +348,8 @@ player = {
             { type: TutorialSequenceTypes.ACTION, action: function() {
                 Game.player.board[8] = new ElementCard(Game.board_start_x + 1 * Game.board_spacing, Game.board_start_y + 3 * Game.board_spacing, Game.hydrogen);
                 Game.player.board[9] = new ElementCard(Game.board_start_x + 1 * Game.board_spacing, Game.board_start_y + 4 * Game.board_spacing, Game.hydrogen);
+                Game.player.board[8].special_disable = true;
+                Game.player.board[9].special_disable = true;
             }, },
             { type: TutorialSequenceTypes.CONDITIONAL_PASS, text: "Here's everything else you need to finish a molecule. Have at it!", condition: function() {
                 return Game.player.molecule.IsComplete();
@@ -392,6 +396,9 @@ player = {
                 inst_atom_count.enabled = true;
                 inst_atom_name.enabled = true
                 inst_total_score.enabled = true;
+                Game.save_data.exists = true;
+                Game.player.molecule.Clear();
+                Game.player.Start();
             }, },
         ],
         

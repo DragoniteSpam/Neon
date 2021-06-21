@@ -53,6 +53,7 @@ function ElementCard(x, y, element) constructor {
     self.mouseover = false;
     self.used = false;
     self.interactive = true;
+    self.special_disable = false;
     
     self.OnClick = function() {
     }
