@@ -9,6 +9,8 @@
 #macro c_halogen        0x0033ff
 #macro c_noble          0xcc66ff
 
+#macro c_invalid        0x999999
+
 class_hydrogen          = new Class("Hydrogen", c_hydrogen);
 class_alkali            = new Class("Alkali Metals", c_alkali);
 class_earth             = new Class("Rare Earth Metals", c_earth);
@@ -18,6 +20,8 @@ class_metal             = new Class("Metals", c_metal);
 class_carbon            = new Class("Halogens", c_carbon);              // yes i know, shut up
 class_halogen           = new Class("Halogens", c_halogen);
 class_noble             = new Class("Noble Gasses", c_noble);
+
+class_invalid           = new Class("Invalid", c_invalid);
 
 hydrogen                = new Element("Hydrogen",   "H",    01,     1,      2,      2.30,       class_hydrogen);
 helium                  = new Element("Helium",     "He",   02,     0,      2,      undefined,  class_noble);
@@ -39,6 +43,9 @@ phosphorus              = new Element("Phosphorus", "P",    15,     5,      8,  
 sulfur                  = new Element("Sulfur",     "S",    16,     6,      8,      2.59,       class_nonmetal);
 chlorine                = new Element("Chlorine",   "Cl",   17,     7,      8,      2.87,       class_halogen);
 argon                   = new Element("Argon",      "Ar",   18,     8,      8,      undefined,  class_noble);
+
+element_invalid         = new Element("Invalid", "", undefined, undefined, undefined, undefined, class_invalid);
+element_invalid.valid = false;
 
 periodic_table = [
     hydrogen, helium,
@@ -78,7 +85,7 @@ elements = [
 #macro c_hover                  0xbfbfbf
 #macro c_used                   0x3f3f3f
 #macro BOARD_SIZE               5
-#macro STARTING_TIME            10
+#macro STARTING_TIME            60
 #macro WRONGNESS_PENALTY        0.75
 #macro CARBON_LIMIT             2                           // organic chemistry makes this really bad, let's not do it
 #macro BASE_ATOM_LIMIT          3
@@ -188,6 +195,14 @@ player = {
         }
     },
     
+    EraseBoard: function() {
+        for (var i = 0, n = array_length(self.board); i < n; i++) {
+            var col = i div BOARD_SIZE;
+            var row = i mod BOARD_SIZE;
+            self.board[i] = new ElementCard(Game.board_start_x + col * Game.board_spacing, Game.board_start_y + row * Game.board_spacing, Game.element_invalid);
+        }
+    },
+    
     Generate: function(rank) {
         var max_weight = 0;
         for (var i = 0; i < min(rank + 1, array_length(Game.elements)); i++) {
@@ -210,10 +225,15 @@ player = {
     },
     
     Start: function() {
-        self.Fill();
-        self.time = STARTING_TIME;
         self.running = true;
         self.atom_limit = BASE_ATOM_LIMIT + 2 * self.rank;
+        if (Game.save_data.exists) {
+            self.Fill();
+            self.time = STARTING_TIME;
+        } else {
+            self.EraseBoard();
+            self.time = 1000000000;
+        }
     },
     
     StartTutorial: function() {
