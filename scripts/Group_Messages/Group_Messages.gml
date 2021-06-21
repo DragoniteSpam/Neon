@@ -20,8 +20,9 @@ function ui_create_message(message, buttons) {
         button.x -= button.sprite_width / 2;
         button.image_yscale = 0.5;
         button.text = buttons[i].message;
-        button.OnClick = buttons[i].click;
+        button.OnClick = method(button, buttons[i].click);
         button.elevated_interaction = true;
+        button.index = i;
         ds_list_add(Game.ui_dynamic, button);
     }
 }
