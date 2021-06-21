@@ -35,3 +35,10 @@ function ui_clear_dynamic_messages() {
     }
     ds_list_clear(Game.ui_dynamic);
 }
+
+function ui_clear_tutorial_messages() {
+    for (var i = 0, n = ds_list_size(Game.ui_tutorial); i < n; i++) {
+        instance_destroy(Game.ui_tutorial[| i]);
+    }
+    ds_list_clear(Game.ui_tutorial);
+}
