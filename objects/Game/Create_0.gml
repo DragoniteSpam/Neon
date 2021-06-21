@@ -393,6 +393,15 @@ player = {
                     }
                     ui_create_message(data.text, choices);
                     break;
+                case TutorialSequenceTypes.CHOICE_BRANCH:
+                    ui_create_message(data.branches[self.choice], [{
+                        message: "Next",
+                        click: function() {
+                            ui_clear_dynamic_messages();
+                            Game.player.tutorial.Next();
+                        },
+                    }]);
+                    break;
                 case TutorialSequenceTypes.WAIT:
                     self.wait_time = data.duration;
                     break;
