@@ -267,6 +267,10 @@ player = {
 ui_dynamic = ds_list_create();
 ui_tutorial = ds_list_create();
 
+blocked = function() {
+    return !ds_list_empty(Game.ui_dynamic);
+};
+
 player.Start();
 
 enum TutorialSequenceTypes {

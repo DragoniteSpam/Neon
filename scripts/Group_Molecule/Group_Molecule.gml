@@ -190,6 +190,7 @@ function Molecule() constructor {
                 button.x -= button.sprite_width / 2;
                 button.image_yscale = 0.5;
                 button.text = "Continue";
+                button.elevated_interaction = true;
                 button.OnClick = function() {
                     for (var i = 0, n = ds_list_size(Game.ui_dynamic); i < n; i++) {
                         instance_destroy(Game.ui_dynamic[| i]);

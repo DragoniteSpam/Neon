@@ -59,7 +59,7 @@ function ElementCard(x, y, element) constructor {
         var y1 = self.y;
         var x2 = x1 + sprite_get_width(self.element.sprite);
         var y2 = y1 + sprite_get_height(self.element.sprite);
-        if (ds_list_empty(Game.ui_dynamic) && point_in_rectangle(mx, my, x1, y1, x2, y2)) {
+        if (!Game.blocked() && point_in_rectangle(mx, my, x1, y1, x2, y2)) {
             self.mouseover = true;
             if (mouse_check_button_pressed(mb_left)) {
                 if (Game.player.molecule.Add(self.element)) {

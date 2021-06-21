@@ -12,7 +12,7 @@ var y2 = y + sprite_height;
 var xt = x + sprite_width / 2;
 var yt = y + sprite_height / 2;
 
-var mouseover = point_in_rectangle(window_mouse_get_x(), window_mouse_get_y(), x1, y1, x2, y2);
+var mouseover = (!Game.blocked() || self.elevated_interaction) && point_in_rectangle(window_mouse_get_x(), window_mouse_get_y(), x1, y1, x2, y2);
 
 draw_sprite_stretched_ext(sprite_index, 0, x, y, sprite_width, sprite_height, mouseover ? c_hover : c_white, 1);
 draw_sprite_stretched_ext(sprite_index, 1, x, y, sprite_width, sprite_height, mouseover ? c_hover : c_white, 1);
