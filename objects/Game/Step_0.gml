@@ -1,1 +1,3 @@
-self.player.tick();
+if (self.active) {
+    self.player.tick();
+}

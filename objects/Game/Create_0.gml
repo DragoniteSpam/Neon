@@ -336,7 +336,7 @@ blocked = function() {
     return !ds_list_empty(Game.ui_dynamic);
 };
 
-player.Start();
+active = false;
 
 enum TutorialSequenceTypes {
     TEXT, CHOICES, CHOICE_BRANCH, CONDITIONAL_PASS, ACTION,
