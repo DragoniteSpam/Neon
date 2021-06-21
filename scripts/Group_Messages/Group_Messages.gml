@@ -7,8 +7,16 @@ function ui_create_message(message, buttons) {
     background.shade = true;
     ds_list_add(Game.ui_dynamic, background);
     
-    for (var i = 0, n = array_length(buttons); i < n; i++) {
-        var button = instance_create_depth(room_width / 2, background.y + background.sprite_height + 32, UI_LAYER - 200, UIButton);
+    var n = array_length(buttons);
+    var off = 0;
+    switch (n) {
+        case 1:     off = 0;        break;
+        case 2:     off = 72;       break;
+        case 3:     off = 144;      break;
+    }
+    
+    for (var i = 0; i < n; i++) {
+        var button = instance_create_depth(room_width / 2 - off + 144 * i, background.y + background.sprite_height + 32, UI_LAYER - 200, UIButton);
         button.x -= button.sprite_width / 2;
         button.image_yscale = 0.5;
         button.text = buttons[i].message;
