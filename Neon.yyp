@@ -5,6 +5,8 @@
     {"id":{"name":"fnt_neon","path":"fonts/fnt_neon/fnt_neon.yy",},"order":19,},
     {"id":{"name":"Group_Molecule","path":"scripts/Group_Molecule/Group_Molecule.yy",},"order":21,},
     {"id":{"name":"fnt_neon_small","path":"fonts/fnt_neon_small/fnt_neon_small.yy",},"order":18,},
+    {"id":{"name":"spr_adam","path":"sprites/spr_adam/spr_adam.yy",},"order":29,},
+    {"id":{"name":"spr_face","path":"sprites/spr_face/spr_face.yy",},"order":30,},
     {"id":{"name":"UIText","path":"objects/UIText/UIText.yy",},"order":23,},
     {"id":{"name":"Game","path":"objects/Game/Game.yy",},"order":17,},
     {"id":{"name":"UI_Root","path":"objects/UI_Root/UI_Root.yy",},"order":27,},
