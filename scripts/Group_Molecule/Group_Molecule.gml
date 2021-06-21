@@ -291,6 +291,7 @@ function Molecule() constructor {
     }
     
     function IsComplete() {
+        if (!self.root) return false;
         for (var i = 0; i < array_length(self.log); i++) {
             if (!self.log[i].Complete()) return false;
         }
