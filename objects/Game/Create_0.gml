@@ -152,7 +152,7 @@ GameOver = function() {
         ]);
     }
     Game.AddHighScore(self.player.score);
-    // Game.save();
+    Game.save();
 };
 
 board_start_x = 32;
@@ -191,6 +191,12 @@ player = {
                 self.board[i] = new ElementCard(Game.board_start_x + col * Game.board_spacing, Game.board_start_y + row * Game.board_spacing, self.Generate(0));
                 if (self.board[i].element == Game.carbon) carbons++;
             } until (carbons <= CARBON_LIMIT);
+        }
+    },
+    
+    EraseOnlyUsed: function() {
+        for (var i = 0, n = array_length(self.board); i < n; i++) {
+            if (self.board[i].used) self.board[i] = undefined;
         }
     },
     
@@ -291,6 +297,8 @@ player = {
     
     ResetAfterRound: function() {
         if (self.tutorial.running) return;
+        self.EraseOnlyUsed();
+        self.Fill();
     },
     
     tutorial: {
@@ -416,6 +424,7 @@ player = {
                 inst_total_score.enabled = true;
                 Game.save_data.exists = true;
                 Game.player.molecule.Clear();
+                Game.save();
                 Game.player.Start();
             }, },
         ],
