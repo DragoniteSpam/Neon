@@ -293,14 +293,14 @@ player = {
             { type: TutorialSequenceTypes.TEXT, text: "My name is Adam!", },
             { type: TutorialSequenceTypes.CHOICES, text: "You remember chemistry, right?", choices: ["Yeah!", "Nope!", "Oh no..."], },
             { type: TutorialSequenceTypes.CHOICE_BRANCH, branches: ["Really? We're going to get along just great, I can tell!", "Well, there's no time like the present to brush up on your skills!", "Cool! Wait, you sound worried. Why are you worried?"], },
-            { type: TutorialSequenceTypes.ACTION, action: function() { self.board[12] = new ElementCard(Game.board_start_x + 3 * Game.board_spacing, Game.board_start_y + 2 * Game.board_spacing, Game.nitrogen); }, },
+            { type: TutorialSequenceTypes.ACTION, action: function() { Game.player.board[12] = new ElementCard(Game.board_start_x + 2 * Game.board_spacing, Game.board_start_y + 2 * Game.board_spacing, Game.nitrogen); }, },
             { type: TutorialSequenceTypes.TEXT, text: "Anyway, you see this here? That's a atom of the element Nitrogen.", },
             { type: TutorialSequenceTypes.TEXT, text: "Elements are the basis of allmost everything in the Universe." },
             { type: TutorialSequenceTypes.TEXT, text: "Except for the stuff they make in particle accelerators.", },
             { type: TutorialSequenceTypes.TEXT, text: "And maybe the weird pasta stuff in neutron stars.", },
             { type: TutorialSequenceTypes.CONDITIONAL_PASS, text: "You can use atoms to build molecules. Click on it!", condition: function() { return Game.player.tutorial.flags.first_atom; }, },
             { type: TutorialSequenceTypes.TEXT, text: "Now, molecules are made of multiple elements chemically bonded to each other.", },
-            { type: TutorialSequenceTypes.ACTION, action: function() { self.board[7] = new ElementCard(Game.board_start_x + 2 * Game.board_spacing, Game.board_start_y + 1 * Game.board_spacing, Game.hydrogen); }, },
+            { type: TutorialSequenceTypes.ACTION, action: function() { Game.player.board[7] = new ElementCard(Game.board_start_x + 2 * Game.board_spacing, Game.board_start_y + 1 * Game.board_spacing, Game.hydrogen); }, },
             { type: TutorialSequenceTypes.TEXT, text: "Here's another element. It can bond with your Nitrogen atom.", },
             { type: TutorialSequenceTypes.TEXT, text: "Different elements can bond with other elements in different ways.", },
             { type: TutorialSequenceTypes.TEXT, text: "Atomic bonds are powered by the number of valence electrons an element has.", },
@@ -310,8 +310,8 @@ player = {
             { type: TutorialSequenceTypes.TEXT, text: "The second number is the maximum number of electrons it can acquire through bonding with something.", },
             { type: TutorialSequenceTypes.TEXT, text: "When every atom in a molecule has reached that maximum number of electrons, it's considered a stable molecule.", },
             { type: TutorialSequenceTypes.ACTION, action: function() {
-                self.board[8] = new ElementCard(Game.board_start_x + 3 * Game.board_spacing, Game.board_start_y + 1 * Game.board_spacing, Game.hydrogen);
-                self.board[9] = new ElementCard(Game.board_start_x + 4 * Game.board_spacing, Game.board_start_y + 1 * Game.board_spacing, Game.hydrogen);
+                Game.player.board[8] = new ElementCard(Game.board_start_x + 3 * Game.board_spacing, Game.board_start_y + 1 * Game.board_spacing, Game.hydrogen);
+                Game.player.board[9] = new ElementCard(Game.board_start_x + 4 * Game.board_spacing, Game.board_start_y + 1 * Game.board_spacing, Game.hydrogen);
             }, },
             { type: TutorialSequenceTypes.CONDITIONAL_PASS, text: "Here's everything else you need to finish a molecule. Have at it!", condition: function() { return Game.player.tutorial.flags.first_molecule; }, },
             { type: TutorialSequenceTypes.TEXT, text: "You did it! You created a complete molecule of Ammonia!", },
@@ -319,8 +319,8 @@ player = {
             { type: TutorialSequenceTypes.TEXT, text: "A Hydrogen atom and a Nitrogen atom can only share a single electron through an atomic bond.", },
             { type: TutorialSequenceTypes.TEXT, text: "Hydrogen can only share up to one additional electron with another element.", },
             { type: TutorialSequenceTypes.ACTION, action: function() {
-                self.board[18] = new ElementCard(Game.board_start_x + 3 * Game.board_spacing, Game.board_start_y + 3 * Game.board_spacing, Game.oxygen);
-                self.board[19] = new ElementCard(Game.board_start_x + 4 * Game.board_spacing, Game.board_start_y + 3 * Game.board_spacing, Game.oxygen);
+                Game.player.board[18] = new ElementCard(Game.board_start_x + 3 * Game.board_spacing, Game.board_start_y + 3 * Game.board_spacing, Game.oxygen);
+                Game.player.board[19] = new ElementCard(Game.board_start_x + 4 * Game.board_spacing, Game.board_start_y + 3 * Game.board_spacing, Game.oxygen);
             }, },
             { type: TutorialSequenceTypes.CONDITIONAL_PASS, text: "Here are two Oxygen atoms.", condition: function() { return Game.player.tutorial.flags.first_multi_bond; }, },
             { type: TutorialSequenceTypes.TEXT, text: "Oxygen, as you can see, requires two more electrons to be shared until it reaches its limit.", },
@@ -404,6 +404,10 @@ player = {
                     break;
                 case TutorialSequenceTypes.WAIT:
                     self.wait_time = data.duration;
+                    break;
+                case TutorialSequenceTypes.ACTION:
+                    data.action();
+                    self.Next();
                     break;
             }
         },
