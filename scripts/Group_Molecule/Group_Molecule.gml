@@ -33,8 +33,33 @@ function Molecule() constructor {
                         }
                         show_debug_message("Bonded " + string(self) + " to " + string(node) + " (covalent)");
                     } else {
-                        ui_create_message("How many bonds would you like to create?", [
-                        ]);
+                        #region ask
+                        var responses = [
+                            {
+                                message: "Single",
+                                click: function() {
+                                    
+                                },
+                            },
+                        ];
+                        if (shared >= 2) {
+                            array_push(responses,  {
+                                message: "Double",
+                                click: function() {
+                                    
+                                },
+                            });
+                        }
+                        if (shared >= 3) {
+                            array_push(responses,  {
+                                message: "Triple",
+                                click: function() {
+                                    
+                                },
+                            });
+                        }
+                        ui_create_message("How many bonds would you like to create?", responses);
+                        #endregion
                     }
                 } else {                    // ionic
                     var donated;
@@ -62,8 +87,33 @@ function Molecule() constructor {
                         }
                         show_debug_message("Bonded " + string(self) + " to " + string(node) + " (ionic)");
                     } else {
-                        ui_create_message("How many bonds would you like to create?", [
-                        ]);
+                        #region ask
+                        var responses = [
+                            {
+                                message: "Single",
+                                click: function() {
+                                    
+                                },
+                            },
+                        ];
+                        if (shared >= 2) {
+                            array_push(responses,  {
+                                message: "Double",
+                                click: function() {
+                                    
+                                },
+                            });
+                        }
+                        if (shared >= 3) {
+                            array_push(responses,  {
+                                message: "Triple",
+                                click: function() {
+                                    
+                                },
+                            });
+                        }
+                        ui_create_message("How many bonds would you like to create?", responses);
+                        #endregion
                     }
                 }
                 return true;
@@ -166,6 +216,7 @@ function Molecule() constructor {
         self.root = undefined;
         self.score = 0;
         self.log = [];
+        self.cached_node = undefined;
         
         self.all_nodes = { };
         
@@ -176,8 +227,15 @@ function Molecule() constructor {
         Game.player.EnableAll();
     }
     
-    function Add(element) {
-        var node = new self.MoleculeNode(element);
+    function Add(element, bonds = undefined) {
+        var node;
+        if (element == undefined) {
+            node = self.cached_node;
+            element = node.element;
+        } else {
+            node = new self.MoleculeNode(element);
+        }
+        self.cached_node = node;
         if (element.electro == undefined) {
             self.score *= element.number;
             array_push(self.log, node);
@@ -193,7 +251,7 @@ function Molecule() constructor {
             self.Shake();
             return false;
         }
-        if (self.root.Add(node, { }, undefined)) {
+        if (self.root.Add(node, { }, bonds)) {
             self.score += element.number;
             array_push(self.log, node);
             if (self.IsComplete()) {
@@ -331,6 +389,7 @@ function Molecule() constructor {
     self.root = undefined;
     self.score = 0;
     self.log = [];
+    self.cached_node = undefined;
     
     static all_nodes = { };
     function get(id) {
