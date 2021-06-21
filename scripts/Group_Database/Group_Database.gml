@@ -6,9 +6,10 @@ function Element(name, symbol, number, valence, shell_size, electro, class) cons
     self.shell_size = shell_size;
     self.electro = electro;
     self.class = class;
+    self.valid = true;
     
     self.sprite = spr_card;
-    self.radius = 12 * (1 + sqrt(self.number));
+    self.radius = (self.number == undefined) ? 0 : (12 * (1 + sqrt(self.number)));
     
     function draw(x, y, mouseover, used) {
         var width = sprite_get_height(self.sprite);
@@ -24,13 +25,15 @@ function Element(name, symbol, number, valence, shell_size, electro, class) cons
         draw_set_font(fnt_neon);
         draw_text_colour(x + width / 2, y + height / 2, self.symbol, c_black, c_black, c_black, c_black, 1);
         draw_set_font(fnt_neon_small);
-        draw_text_colour(x + width / 2, y + height - 20, self.number, c_black, c_black, c_black, c_black, 1);
+        if (self.number != undefined) {
+            draw_text_colour(x + width / 2, y + height - 20, self.number, c_black, c_black, c_black, c_black, 1);
+        }
         if (self.electro != undefined) {
             draw_set_halign(fa_right);
             draw_text_colour(x + width - 20, y + 20, string(self.electro), c_black, c_black, c_black, c_black, 1);
             draw_set_halign(fa_left);
             draw_text_colour(x + 20, y + 20, string(self.valence) + "/" + string(self.shell_size), c_black, c_black, c_black, c_black, 1);
-        } else {
+        } else if (self.number != undefined) {
             draw_set_halign(fa_center);
             draw_text_colour(x + width / 2, y + 20, "x" + string(self.number), c_black, c_black, c_black, c_black, 1);
         }
@@ -59,7 +62,7 @@ function ElementCard(x, y, element) constructor {
         var y1 = self.y;
         var x2 = x1 + sprite_get_width(self.element.sprite);
         var y2 = y1 + sprite_get_height(self.element.sprite);
-        if (!Game.blocked() && point_in_rectangle(mx, my, x1, y1, x2, y2)) {
+        if (self.element.valid && !Game.blocked() && point_in_rectangle(mx, my, x1, y1, x2, y2)) {
             self.mouseover = true;
             if (mouse_check_button_pressed(mb_left)) {
                 if (Game.player.molecule.Add(self.element)) {
