@@ -231,6 +231,12 @@ player = {
             self.Fill();
             self.time = STARTING_TIME;
         } else {
+            inst_score.enabled = false;
+            inst_time.enabled = false;
+            inst_atom_count.enabled = false;
+            inst_atom_name.enabled = false;
+            inst_reset.enabled = false;
+            inst_total_score.enabled = false;
             self.EraseBoard();
             self.time = 1000000000;
             self.tutorial.Next();
@@ -350,6 +356,7 @@ player = {
             { type: TutorialSequenceTypes.ACTION, action: function() {
                 Game.player.board[19] = new ElementCard(Game.board_start_x + 3 * Game.board_spacing, Game.board_start_y + 4 * Game.board_spacing, Game.oxygen);
                 Game.player.board[24] = new ElementCard(Game.board_start_x + 4 * Game.board_spacing, Game.board_start_y + 4 * Game.board_spacing, Game.oxygen);
+                inst_reset.enabled = true;
             }, },
             { type: TutorialSequenceTypes.TEXT, text: "Here are two Oxygen atoms. By the way, if you ever want to reset the molecule, you can click the \"Reset\" button in the corner.", },
             { type: TutorialSequenceTypes.CONDITIONAL_PASS, text: "", condition: function() {
@@ -374,6 +381,14 @@ player = {
             { type: TutorialSequenceTypes.TEXT, text: "In some cases you'll find that the world geometry of molecules looks a little different from what you see on the right in the real world...", },
             { type: TutorialSequenceTypes.TEXT, text: "...but again, this was made for a game jam. Give me a break.", },
             { type: TutorialSequenceTypes.TEXT, text: "Now, is that everything? Have fun!", },
+            
+            { type: TutorialSequenceTypes.ACTION, action: function() {
+                inst_score.enabled = true;
+                inst_time.enabled = true;
+                inst_atom_count.enabled = true;
+                inst_atom_name.enabled = true
+                inst_total_score.enabled = true;
+            }, },
         ],
         
         choice: 0,
