@@ -85,6 +85,29 @@ elements = [
 #macro SHAKE_DISTANCE           20
 #macro SHAKE_DECAY              0.5
 #macro UI_LAYER                 layer_get_depth("UI_Game")
+#macro SAVE_DATA_FILE           "adam_sounds_like_atom_get_it.json"
+
+save_data = {
+    exists: false,
+    high_scores: [ ],
+};
+
+try {
+    var buffer = buffer_load(SAVE_DATA_FILE);
+    var json = json_parse(buffer_read(buffer, buffer_text));
+    save_data.exists = true;
+    save_data.high_scores = json.high_scores;
+    buffer_delete(buffer);
+} catch (e) {
+    show_debug_message("no save data found, let's create some instead");
+}
+
+save = function() {
+    var buffer = buffer_create(100, buffer_grow, 1);
+    buffer_write(buffer, buffer_text, json_stringify(self.save_data));
+    buffer_save_ext(buffer, SAVE_DATA_FILE, 0, buffer_tell(buffer));
+    buffer_delete(buffer);
+};
 
 board_start_x = 32;
 board_start_y = 32;
