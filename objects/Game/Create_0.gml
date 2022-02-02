@@ -94,7 +94,7 @@ elements = [
 
 save_data = {
     exists: false,
-    high_scores: [ ],
+    high_scores: [],
 };
 
 try {
@@ -113,7 +113,7 @@ try {
     show_debug_message("no valid save data found, let's create some instead");
     self.save_data = {
         exists: false,
-        high_scores: [ ],
+        high_scores: [],
     };
 }
 
@@ -144,7 +144,6 @@ GameOver = function() {
             },
         ]);
     } else {
-        var is_high_score = (self.player.score > self.save_data.high_scores[0]);
         ui_create_message("Time's up!", [
             {
                 message: "Return!",
