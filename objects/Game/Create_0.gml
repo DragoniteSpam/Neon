@@ -352,7 +352,7 @@ player = {
             { type: TutorialSequenceTypes.TEXT, text: "So, different elements can bond with other elements in different ways.", },
             { type: TutorialSequenceTypes.TEXT, text: "Atomic bonds are powered by the number of valence electrons an element has.", },
             { type: TutorialSequenceTypes.TEXT, text: "When an atom bonds with another atom, they share electrons with one another.", },
-            { type: TutorialSequenceTypes.TEXT, text: "(I swear to Dmitri Mendeleev, that is NOT supposed to be an innuendo for anything.)", },
+            { type: TutorialSequenceTypes.TEXT, text: "(I swear on the departed soul of Dmitri Mendeleev, that is NOT supposed to be an innuendo for anything.)", },
             { type: TutorialSequenceTypes.TEXT, text: "The number of valence electrons that an element has is show in the top left of its tile." },
             { type: TutorialSequenceTypes.TEXT, text: "The second number is the maximum number of electrons it can acquire through bonding with something.", },
             { type: TutorialSequenceTypes.TEXT, text: "When every atom in a molecule has reached that maximum number of electrons, it's considered a stable molecule.", },
