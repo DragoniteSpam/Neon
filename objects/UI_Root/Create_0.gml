@@ -1,6 +1,8 @@
 // this doesn't get rendered, although you can use it as an
 // anchor point for other stuff
 
+delay = 0;
+
 Update = function() {
     
 };

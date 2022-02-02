@@ -24,6 +24,6 @@ draw_text_ext_colour(xt, yt, self.text, -1, sprite_width, c_black, c_black, c_bl
 
 if (!self.interactive || !mouseover) return;
 
-if (mouse_check_button_pressed(mb_left)) {
+if (self.delay <= 0 && mouse_check_button_pressed(mb_left)) {
     self.OnClick();
 }

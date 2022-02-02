@@ -62,7 +62,7 @@ function Molecule() constructor {
                                 },
                             });
                         }
-                        ui_create_message("How many bonds would you like to create?", responses);
+                        ui_create_message("How many bonds would you like to create?", responses, , 0.5);
                         return BondStatusCodes.DEFERRED;
                         #endregion
                     }
@@ -121,7 +121,7 @@ function Molecule() constructor {
                                 },
                             });
                         }
-                        ui_create_message("How many bonds would you like to create?", responses);
+                        ui_create_message("How many bonds would you like to create?", responses, , 0.5);
                         return BondStatusCodes.DEFERRED;
                         #endregion
                     }
@@ -281,7 +281,7 @@ function Molecule() constructor {
                                     Game.player.molecule.Clear();
                                 }
                             },
-                        ]);
+                        ], , 0.5);
                     }
                 }
                 return BondStatusCodes.SUCCESS;

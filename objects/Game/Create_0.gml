@@ -142,7 +142,7 @@ GameOver = function() {
                     Game.player.Start();
                 },
             },
-        ]);
+        ], , 1);
     } else {
         ui_create_message("Time's up!", [
             {
@@ -152,7 +152,7 @@ GameOver = function() {
                     Game.player.Start();
                 },
             },
-        ]);
+        ], , 1);
     }
     Game.AddHighScore(self.player.score);
     Game.save();
